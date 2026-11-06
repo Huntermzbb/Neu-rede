@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Goethe B2">
+<meta name="theme-color" content="#16204A">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Goethe B2 · Mein Lehrer Pro</title>
+<style>
+:root{
+  --bg:#0D1230;--card:#18214A;--ink:#E8ECFF;--mut:#9AA6D0;--line:#2B376B;--hero:#222E66;
+  --L:#2563EB;--H:#7C3AED;--S:#059669;--P:#EA580C;--acc:#60A5FA;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+.w{max-width:760px;margin:0 auto;padding:14px 14px 70px}
+.hero{background:linear-gradient(135deg,var(--hero),#2A3B7C);color:#fff;border-radius:22px;padding:20px;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.hero h1{margin:0 0 4px;font-size:22px}.hero p{margin:0;opacity:.9;font-size:13px}
+.pill{display:inline-block;background:rgba(255,255,255,.15);border-radius:99px;padding:4px 12px;font-size:12px;margin:12px 6px 0 0}
+.bar{height:8px;background:rgba(255,255,255,.2);border-radius:9px;margin-top:14px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#34D399,#FBBF24);width:0;transition:width .5s}
+.tabs{display:flex;gap:5px;margin:14px 0;background:var(--card);padding:5px;border-radius:16px;border:1px solid var(--line);position:sticky;top:calc(env(safe-area-inset-top,0px) + 6px);z-index:10;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.tabs button{flex:1;border:0;background:none;color:var(--mut);padding:10px 4px;border-radius:12px;font:600 13px inherit;cursor:pointer}
+.tabs button.on{background:#fff;color:#16204A}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.tag{display:inline-block;color:#fff;border-radius:8px;padding:2px 9px;font-size:11px;font-weight:700;letter-spacing:.03em}
+h2{font-size:17px;margin:8px 0}.mut{color:var(--mut);font-size:13px}
+.task{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.task:last-of-type{border:0}
+.task b{flex:0 0 24px;height:24px;border:2px solid var(--line);border-radius:8px;display:grid;place-items:center;font-size:14px;color:#fff;margin-top:1px}
+.task.d b{background:#10B981;border-color:#10B981}
+.task.d span{text-decoration:line-through;opacity:.55}
+.btn{border:0;border-radius:12px;padding:12px 16px;font:700 14px inherit;color:#fff;background:#3B82F6;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.98)}
+.btn.g{background:#10B981}
+.btn.p{background:#3B82F6}
+.btn.o{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.day{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer;font-size:14px}
+.day i{width:10px;height:10px;border-radius:50%;flex:0 0 10px;background:var(--line)}
+.day.d i{background:#10B981}.day.t{font-weight:700}
+.day em{margin-left:auto;font-style:normal;color:var(--mut);font-size:12px}
+select,textarea,input[type="text"]{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px;font:14px inherit;margin:4px 0 10px}
+textarea{min-height:84px;resize:vertical}
+label{font-size:12px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;display:block;margin-top:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg{display:flex;gap:6px;margin:6px 0 12px}
+.seg button{flex:1;padding:10px 6px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:600 12.5px inherit;cursor:pointer}
+.seg button.on{background:#fff;color:#16204A}
+#out{line-height:1.7;font-size:14.5px}
+#out b{color:var(--acc)}
+.hide{display:none !important}
+.qbox{border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin:10px 0;background:var(--bg)}
+.qbox.ok{border-left:5px solid #10B981}
+.qbox.err{border-left:5px solid #EF4444}
+.score-banner{padding:16px;border-radius:16px;margin-bottom:14px;color:#fff;font-weight:700;line-height:1.5}
+.score-banner.pass{background:linear-gradient(135deg,#059669,#10B981)}
+.score-banner.fail{background:linear-gradient(135deg,#DC2626,#EF4444)}
+.qrow{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;margin:6px 0;background:var(--bg);border:1px solid var(--line);border-radius:12px;gap:8px;flex-wrap:wrap}
+.qrow b{min-width:36px;font-size:14px}
+.opt-group{display:flex;gap:5px;flex-wrap:wrap}
+.opt-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;min-width:34px;height:34px;font:700 13.5px inherit;cursor:pointer;padding:0 6px}
+.opt-btn.sel{background:var(--L);color:#fff;border-color:var(--L)}
+.badge-part{display:inline-block;background:var(--line);color:var(--ink);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;margin:10px 0 4px}
+.rm-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+@media(min-width:500px){.rm-grid{grid-template-columns:repeat(4,1fr)}}
+.rm-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;font:600 13px inherit;color:var(--ink);transition:all .2s}
+.rm-card.on{background:#fff;color:#16204A;border-color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.rm-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+.rm-table th,.rm-table td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.rm-table th{background:var(--hero);color:#fff;font-weight:700}
+.example-box{background:var(--bg);border-left:4px solid var(--S);padding:12px;border-radius:10px;margin:10px 0;font-size:13.5px;white-space:pre-line}
+</style>
+</head>
+<body>
+<div class="w">
+  <div class="hero">
+    <h1>🎓 Goethe B2 · Mein Lehrer Pro</h1>
+    <p>Projekt B2 neu · Korrektur, Schlüsselwörter, Synonyme, Schreiben & Sprechen</p>
+    <span class="pill" id="cd">⏳ Noch Tage</span>
+    <span class="pill" id="pg">✅ 0 / 0 Tage</span>
+    <div class="bar"><i id="pb"></i></div>
+  </div>
+
+  <div class="tabs">
+    <button data-t="h" class="on">📅 Heute</button>
+    <button data-t="l">👨‍🏫 Lehrer</button>
+    <button data-t="r">✍️ Redemittel</button>
+    <button data-t="p">📋 Plan</button>
+  </div>
+
+  <section id="v-h"></section>
+
+  <section id="v-l" class="hide">
+    <div class="card">
+      <div class="g2">
+        <div><label>Modelltest (1–15)</label><select id="mt"></select></div>
+        <div><label>Modul</label><select id="md"></select></div>
+      </div>
+      <label id="tl-lbl">Teil</label>
+      <select id="tl"></select>
+
+      <div class="seg">
+        <button data-m="c" class="on">✅ Korrektur & Tchr7</button>
+        <button data-m="k">🔑 Schlüsselwörter</button>
+        <button data-m="t">📋 Ganzer Test (1–30)</button>
+      </div>
+
+      <div id="answ">
+        <label>Antwortbogen (klicke direkt auf deine Antwort)</label>
+        <div id="quick-grid"></div>
+        <label id="an-lbl">Meine Antworten / Mein Text</label>
+        <textarea id="an" placeholder="1-c 2-b 3-a ... (Hören Teil 1: 1R 2a 3F ...)"></textarea>
+      </div>
+
+      <div class="row">
+        <button class="btn p" id="go">👨‍🏫 Frag den Lehrer (S7e7 & Chr7)</button>
+        <button class="btn o" id="show-sol">👁️ Wrrini Lösung</button>
+        <button class="btn o" id="clr-ans">🗑️ Mss7</button>
+      </div>
+    </div>
+
+    <div class="card hide" id="oc">
+      <div id="out"></div>
+    </div>
+  </section>
+
+  <section id="v-r" class="hide">
+    <div class="card">
+      <div class="rm-grid" id="rm-tabs">
+        <button type="button" class="rm-card on" data-rm="s1">📝 Schreiben<br>T1</button>
+        <button type="button" class="rm-card" data-rm="s2">✉️ Schreiben<br>T2</button>
+        <button type="button" class="rm-card" data-rm="p1">🎤 Sprechen<br>T1</button>
+        <button type="button" class="rm-card" data-rm="p2">💬 Sprechen<br>T2</button>
+      </div>
+      <div id="rm-content"></div>
+    </div>
+  </section>
+
+  <section id="v-p" class="hide">
+    <div class="card" id="all"></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var memStore = {};
+  var storage = {
+    get: function(k){ try { return localStorage.getItem(k); } catch(e){ return memStore[k] || null; } },
+    set: function(k, v){ try { localStorage.setItem(k, v); } catch(e){ memStore[k] = v; } }
+  };
+
+  var M = {
+    L: ['Lesen', 'var(--L)'],
+    H: ['Hören', 'var(--H)'],
+    S: ['Schreiben', 'var(--S)'],
+    P: ['Sprechen', 'var(--P)']
+  };
+
+  var iso = function(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  };
+
+  var D0 = new Date(2026, 10, 4), D1 = new Date(2027, 0, 25), EX = new Date(2027, 0, 29);
+  var WD = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+
+  var intro = [
+    ['L','Einführung · Format + Methode Lesen',['Prüfungsformat lesen','Methode Lesen lernen','Modelltest 1 Lesen Teil 1+2 probieren'],75],
+    ['H','Einführung · Methode Hören',['Methode Hören lernen','Modelltest 1 Hören Teil 1+2','Notizen mit Schlüsselwörtern prüfen'],75],
+    ['S','Einführung · Methode Schreiben',['Redemittel abschreiben','Struktur Teil 1+2 lernen','Gliederung für Modelltest 1 schreiben'],75],
+    ['P','Einführung · Methode Sprechen',['Redemittel lernen','Teil 1: 2 Min Vortrag aufnehmen','Teil 2: 2 Argumente üben'],75]
+  ];
+
+  function cyc(t, i){
+    var T = 'Modelltest ' + t;
+    return [
+      ['L', T + ' · Lesen', ['Fragen markieren: Schlüsselwörter (15 Min)', 'Teile 1–5 mit Zeitlimit (65 Min)', 'Beleg-Satz unterstreichen', 'Im Lehrer korrigieren lassen', '10 neue Wörter'], 100],
+      ['H', T + ' · Hören', ['Schlüsselwörter markieren (10 Min)', 'Teile 1–4 hören', 'Notizen im Lehrer prüfen lassen', '10 neue Wörter'], 80],
+      ['S', T + ' · Schreiben', ['Leitpunkte → Schlüsselwörter + Gliederung', 'Teil 1 schreiben (35 Min)', 'Teil 2 schreiben (20 Min)', 'Texte im Lehrer korrigieren lassen'], 80],
+      ['P', T + ' · Sprechen', ['15 Min Vorbereitung', 'Teil 1 + Teil 2 aufnehmen', 'Transkript im Lehrer prüfen', '3 Fehler notieren'], 70],
+      ['L', T + ' · Wiederholung', ['Fehler-Tagebuch ausfüllen', 'Schwächsten Teil nochmal', '20 Wörter wiederholen'], 60]
+    ][i];
+  }
+
+  var plan = [], ci = 0;
+  for(var d = new Date(D0), k = 0; d <= D1; d.setDate(d.getDate()+1), k++){
+    var id = iso(d), r;
+    if(k < 4) r = intro[k];
+    else if(id === '2026-11-23') r = ['P','Termin-Tag (leicht)',['10 Wörter wiederholen','Redemittel Sprechen 1× laut lesen'],20];
+    else if(id === '2027-01-23') r = ['L','Probeprüfung 1 · Lesen + Hören',['Ein Modelltest unter Prüfungsbedingungen','Im Lehrer korrigieren lassen'],130];
+    else if(id === '2027-01-24') r = ['S','Probeprüfung 2 · Schreiben + Sprechen',['Schreiben 75 Min','Sprechen aufnehmen','Im Lehrer prüfen lassen'],120];
+    else if(id === '2027-01-25') r = ['P','Letzte Wiederholung',['Fehler-Tagebuch lesen','Redemittel durchgehen','Früh schlafen'],45];
+    else {
+      var mtNum = Math.floor(ci/5) + 1;
+      r = cyc(mtNum, ci%5);
+      r = [r[0], r[1], r[2], r[3], mtNum];
+      ci++;
+    }
+    plan.push({ id:id, w:WD[d.getDay()], dm:d.getDate()+'.'+(d.getMonth()+1)+'.', m:r[0], t:r[1], k:r[2], min:r[3], mt:r[4]||1 });
+  }
+
+  var S = { done:{}, sel:null, savedAns:{} };
+  try {
+    var rawSaved = storage.get('g2_pro_v3');
+    if(rawSaved) S = Object.assign(S, JSON.parse(rawSaved));
+  } catch(e){}
+
+  function save(){
+    try { storage.set('g2_pro_v3', JSON.stringify({ done:S.done, savedAns:S.savedAns })); } catch(e){}
+  }
+
+  var dn = function(p){
+    var checked = S.done[p.id] || [];
+    return p.k.every(function(_, i){ return checked[i]; });
+  };
+
+  function todayIdx(){
+    var nowStr = iso(new Date());
+    var idx = plan.findIndex(function(p){ return p.id >= nowStr; });
+    return (idx < 0) ? plan.length - 1 : idx;
+  }
+  if(S.sel === null) S.sel = todayIdx();
+
+  function head(){
+    var n = Math.ceil((EX - new Date()) / 864e5);
+    document.getElementById('cd').textContent = (n > 0) ? ('⏳ noch ' + n + ' Tage (29.01.2027)') : '🎯 Prüfungstag';
+    var c = plan.filter(dn).length;
+    document.getElementById('pg').textContent = '✅ ' + c + ' / ' + plan.length + ' Tage';
+    document.getElementById('pb').style.width = (100 * c / plan.length) + '%';
+  }
+
+  function today(){
+    var p = plan[S.sel];
+    if(!p) return;
+    var ch = S.done[p.id] || [], col = M[p.m][1];
+    var h = '<div class="card" style="border-top:4px solid ' + col + '">' +
+            '<span class="tag" style="background:' + col + '">' + M[p.m][0] + '</span> ' +
+            '<span class="mut">' + p.w + ' ' + p.dm + ' · ca. ' + p.min + ' Min</span>' +
+            '<h2>' + p.t + '</h2>';
+    p.k.forEach(function(x, i){
+      var isDone = ch[i];
+      h += '<div class="task' + (isDone ? ' d' : '') + '" data-i="' + i + '">' +
+           '<b>' + (isDone ? '✓' : '') + '</b><span>' + x + '</span></div>';
+    });
+    h += '<div class="row">' +
+         '<button class="btn g" id="all1">Alles erledigt ✓</button>' +
+         '<button class="btn" id="tol">→ Zum Lehrer</button>';
+    if(S.sel > 0) h += '<button class="btn o" id="pv">←</button>';
+    if(S.sel < plan.length - 1) h += '<button class="btn o" id="nx">→</button>';
+    h += '</div></div>';
+    document.getElementById('v-h').innerHTML = h;
+  }
+
+  function list(){
+    var cur = todayIdx();
+    document.getElementById('all').innerHTML = plan.map(function(p, i){
+      return '<div class="day' + (dn(p) ? ' d' : '') + (i === cur ? ' t' : '') + '" data-d="' + i + '">' +
+             '<i></i>' + p.w + ' ' + p.dm + ' <span style="color:' + M[p.m][1] + '">● </span>' + p.t +
+             '<em>' + p.min + '′</em></div>';
+    }).join('');
+  }
+
+  function render(){ head(); today(); list(); }
+
+  document.getElementById('v-h').onclick = function(e){
+    var p = plan[S.sel];
+    if(!p) return;
+    var t = e.target.closest('.task'), b = e.target.closest('button');
+    if(t){
+      var arr = S.done[p.id] = S.done[p.id] || [];
+      arr[+t.dataset.i] = !arr[+t.dataset.i];
+      save(); render();
+    } else if(b){
+      if(b.id === 'all1'){ S.done[p.id] = p.k.map(function(){ return true; }); save(); }
+      else if(b.id === 'pv') S.sel--;
+      else if(b.id === 'nx') S.sel++;
+      else if(b.id === 'tol'){ pre(p); tab('l'); return; }
+      render();
+    }
+  };
+
+  document.getElementById('all').onclick = function(e){
+    var d = e.target.closest('.day');
+    if(d){ S.sel = +d.dataset.d; render(); tab('h'); }
+  };
+
+  function tab(tName){
+    document.querySelectorAll('.tabs button').forEach(function(b){ b.classList.toggle('on', b.dataset.t === tName); });
+    ['h','l','r','p'].forEach(function(x){
+      var sec = document.getElementById('v-' + x);
+      if(sec) sec.classList.toggle('hide', x !== tName);
+    });
+    window.scrollTo(0,0);
+  }
+
+  document.querySelector('.tabs').onclick = function(e){
+    var b = e.target.closest('button');
+    if(b && b.dataset.t) tab(b.dataset.t);
+  };
+
+  var MP_TO_EP = {
+    30:100, 29:97, 28:93, 27:90, 26:87, 25:83, 24:80, 23:77, 22:73, 21:70,
+    20:67, 19:63, 18:60, 17:57, 16:53, 15:50, 14:47, 13:43, 12:40, 11:37,
+    10:33, 9:30, 8:27, 7:23, 6:20, 5:17, 4:13, 3:10, 2:7, 1:3, 0:0
+  };
+
+  var SOLUTIONS = {
+    1: {
+      L: {1:'a',2:'c',3:'d',4:'b',5:'d',6:'a',7:'b',8:'b',9:'c', 10:'e',11:'a',12:'d',13:'g',14:'h',15:'b', 16:'b',17:'b',18:'c',19:'a',20:'b',21:'a', 22:'d',23:'f',24:'g',25:'b',26:'h',27:'e', 28:'e',29:'h',30:'a'},
+      H: {1:'r',2:'a',3:'f',4:'b',5:'r',6:'c',7:'f',8:'c',9:'f',10:'c', 11:'b',12:'a',13:'c',14:'a',15:'b',16:'b', 17:'c',18:'a',19:'b',20:'c',21:'c',22:'c', 23:'c',24:'a',25:'b',26:'b',27:'a',28:'c',29:'b',30:'a'}
+    },
+    2: {
+      L: {1:'b',2:'c',3:'d',4:'b',5:'a',6:'d',7:'b',8:'d',9:'c', 10:'c',11:'g',12:'h',13:'b',14:'f',15:'e', 16:'b',17:'a',18:'b',19:'c',20:'c',21:'a', 22:'f',23:'b',24:'d',25:'h',26:'e',27:'g', 28:'f',29:'e',30:'a'},
+      H: {1:'f',2:'a',3:'r',4:'b',5:'r',6:'c',7:'f',8:'a',9:'f',10:'c', 11:'a',12:'c',13:'b',14:'a',15:'a',16:'b', 17:'a',18:'b',19:'c',20:'c',21:'b',22:'a', 23:'a',24:'a',25:'b',26:'c',27:'c',28:'b',29:'c',30:'a'}
+    },
+    3: {
+      L: {1:'c',2:'d',3:'c',4:'d',5:'a',6:'b',7:'a',8:'c',9:'b', 10:'e',11:'g',12:'c',13:'b',14:'d',15:'h', 16:'b',17:'c',18:'b',19:'c',20:'a',21:'b', 22:'c',23:'g',24:'e',25:'b',26:'d',27:'h', 28:'e',29:'f',30:'c'},
+      H: {1:'f',2:'b',3:'r',4:'b',5:'f',6:'a',7:'f',8:'c',9:'r',10:'c', 11:'b',12:'a',13:'b',14:'a',15:'c',16:'a', 17:'c',18:'c',19:'b',20:'a',21:'b',22:'c', 23:'b',24:'a',25:'b',26:'c',27:'c',28:'a',29:'b',30:'c'}
+    },
+    4: {
+      L: {1:'b',2:'d',3:'d',4:'b',5:'c',6:'b',7:'a',8:'c',9:'c', 10:'h',11:'e',12:'g',13:'a',14:'b',15:'d', 16:'b',17:'a',18:'c',19:'b',20:'b',21:'a', 22:'d',23:'h',24:'b',25:'g',26:'f',27:'c', 28:'h',29:'e',30:'b'},
+      H: {1:'f',2:'c',3:'r',4:'b',5:'r',6:'c',7:'r',8:'b',9:'f',10:'c', 11:'a',12:'a',13:'c',14:'a',15:'a',16:'b', 17:'c',18:'b',19:'c',20:'b',21:'a',22:'b', 23:'b',24:'a',25:'a',26:'c',27:'c',28:'b',29:'b',30:'c'}
+    },
+    5: {
+      L: {1:'d',2:'c',3:'c',4:'b',5:'d',6:'c',7:'a',8:'c',9:'b', 10:'c',11:'g',12:'a',13:'b',14:'h',15:'e', 16:'a',17:'b',18:'c',19:'b',20:'b',21:'c', 22:'f',23:'g',24:'c',25:'b',26:'h',27:'e', 28:'b',29:'e',30:'g'},
+      H: {1:'f',2:'a',3:'r',4:'c',5:'f',6:'b',7:'r',8:'a',9:'f',10:'c', 11:'a',12:'c',13:'b',14:'a',15:'b',16:'c', 17:'c',18:'b',19:'a',20:'a',21:'c',22:'b', 23:'c',24:'b',25:'a',26:'a',27:'c',28:'c',29:'b',30:'a'}
+    },
+    6: {
+      L: {1:'c',2:'b',3:'a',4:'c',5:'d',6:'a',7:'c',8:'d',9:'b', 10:'f',11:'b',12:'a',13:'h',14:'e',15:'d', 16:'b',17:'a',18:'b',19:'c',20:'b',21:'a', 22:'b',23:'h',24:'f',25:'e',26:'d',27:'g', 28:'g',29:'d',30:'b'},
+      H: {1:'f',2:'b',3:'f',4:'a',5:'r',6:'a',7:'r',8:'b',9:'f',10:'c', 11:'b',12:'a',13:'c',14:'c',15:'b',16:'c', 17:'c',18:'a',19:'b',20:'a',21:'b',22:'c', 23:'b',24:'a',25:'a',26:'a',27:'c',28:'c',29:'b',30:'c'}
+    },
+    7: {
+      L: {1:'c',2:'d',3:'c',4:'b',5:'c',6:'a',7:'a',8:'b',9:'b', 10:'f',11:'h',12:'d',13:'g',14:'c',15:'a', 16:'c',17:'a',18:'b',19:'c',20:'b',21:'a', 22:'d',23:'c',24:'h',25:'g',26:'b',27:'e', 28:'d',29:'a',30:'h'},
+      H: {1:'f',2:'b',3:'r',4:'a',5:'f',6:'c',7:'f',8:'a',9:'f',10:'b', 11:'a',12:'b',13:'c',14:'a',15:'b',16:'c', 17:'c',18:'b',19:'b',20:'b',21:'c',22:'c', 23:'a',24:'a',25:'c',26:'b',27:'b',28:'c',29:'c',30:'b'}
+    },
+    8: {
+      L: {1:'c',2:'d',3:'b',4:'a',5:'c',6:'d',7:'c',8:'b',9:'c', 10:'g',11:'h',12:'d',13:'f',14:'a',15:'c', 16:'c',17:'a',18:'a',19:'b',20:'b',21:'b', 22:'e',23:'g',24:'b',25:'h',26:'d',27:'f', 28:'g',29:'a',30:'e'},
+      H: {1:'r',2:'c',3:'f',4:'b',5:'f',6:'c',7:'r',8:'a',9:'f',10:'b', 11:'c',12:'b',13:'c',14:'a',15:'b',16:'b', 17:'a',18:'c',19:'b',20:'b',21:'a',22:'b', 23:'c',24:'b',25:'c',26:'b',27:'a',28:'b',29:'a',30:'b'}
+    },
+    9: {
+      L: {1:'d',2:'a',3:'b',4:'d',5:'c',6:'d',7:'c',8:'b',9:'a', 10:'e',11:'g',12:'c',13:'d',14:'a',15:'h', 16:'a',17:'b',18:'a',19:'b',20:'b',21:'c', 22:'h',23:'e',24:'b',25:'g',26:'d',27:'c', 28:'g',29:'c',30:'f'},
+      H: {1:'r',2:'b',3:'f',4:'a',5:'f',6:'c',7:'r',8:'a',9:'r',10:'b', 11:'c',12:'a',13:'b',14:'c',15:'b',16:'a', 17:'a',18:'b',19:'a',20:'c',21:'c',22:'b', 23:'b',24:'c',25:'a',26:'b',27:'a',28:'b',29:'b',30:'a'}
+    },
+    10: {
+      L: {1:'c',2:'a',3:'c',4:'d',5:'a',6:'b',7:'d',8:'c',9:'b', 10:'d',11:'e',12:'h',13:'a',14:'g',15:'c', 16:'b',17:'c',18:'a',19:'b',20:'c',21:'a', 22:'f',23:'h',24:'c',25:'b',26:'g',27:'e', 28:'g',29:'f',30:'c'},
+      H: {1:'r',2:'a',3:'f',4:'c',5:'f',6:'b',7:'r',8:'a',9:'r',10:'c', 11:'c',12:'b',13:'a',14:'c',15:'c',16:'a', 17:'b',18:'c',19:'b',20:'a',21:'c',22:'a', 23:'a',24:'c',25:'b',26:'a',27:'c',28:'b',29:'b',30:'a'}
+    },
+    11: {
+      L: {1:'c',2:'b',3:'b',4:'a',5:'d',6:'c',7:'a',8:'b',9:'d', 10:'h',11:'b',12:'f',13:'a',14:'d',15:'e', 16:'c',17:'a',18:'c',19:'b',20:'c',21:'b', 22:'e',23:'b',24:'g',25:'h',26:'c',27:'f', 28:'e',29:'g',30:'a'},
+      H: {1:'f',2:'c',3:'r',4:'b',5:'f',6:'a',7:'f',8:'b',9:'f',10:'c', 11:'b',12:'b',13:'a',14:'c',15:'a',16:'b', 17:'b',18:'c',19:'c',20:'a',21:'c',22:'b', 23:'b',24:'c',25:'a',26:'a',27:'b',28:'c',29:'a',30:'a'}
+    },
+    12: {
+      L: {1:'c',2:'d',3:'a',4:'b',5:'a',6:'c',7:'d',8:'b',9:'c', 10:'e',11:'c',12:'b',13:'h',14:'f',15:'d', 16:'c',17:'b',18:'b',19:'c',20:'a',21:'c', 22:'f',23:'d',24:'b',25:'h',26:'c',27:'e', 28:'b',29:'e',30:'f'},
+      H: {1:'r',2:'a',3:'r',4:'b',5:'f',6:'b',7:'r',8:'a',9:'r',10:'c', 11:'a',12:'c',13:'c',14:'c',15:'b',16:'a', 17:'a',18:'c',19:'b',20:'b',21:'b',22:'b', 23:'a',24:'c',25:'b',26:'b',27:'c',28:'a',29:'c',30:'c'}
+    },
+    13: {
+      L: {1:'b',2:'c',3:'d',4:'c',5:'b',6:'a',7:'c',8:'b',9:'d', 10:'e',11:'h',12:'a',13:'g',14:'f',15:'c', 16:'a',17:'b',18:'c',19:'b',20:'c',21:'b', 22:'c',23:'g',24:'e',25:'d',26:'f',27:'h', 28:'c',29:'d',30:'g'},
+      H: {1:'r',2:'b',3:'f',4:'b',5:'r',6:'b',7:'f',8:'a',9:'r',10:'c', 11:'a',12:'c',13:'a',14:'c',15:'b',16:'a', 17:'a',18:'b',19:'c',20:'a',21:'c',22:'b', 23:'c',24:'a',25:'b',26:'a',27:'b',28:'a',29:'b',30:'c'}
+    },
+    14: {
+      L: {1:'c',2:'d',3:'a',4:'c',5:'b',6:'d',7:'b',8:'c',9:'b', 10:'b',11:'e',12:'f',13:'g',14:'d',15:'c', 16:'c',17:'b',18:'b',19:'a',20:'c',21:'a', 22:'e',23:'c',24:'h',25:'b',26:'f',27:'g', 28:'e',29:'b',30:'c'},
+      H: {1:'r',2:'a',3:'f',4:'b',5:'r',6:'c',7:'f',8:'b',9:'r',10:'a', 11:'b',12:'a',13:'b',14:'c',15:'c',16:'b', 17:'c',18:'a',19:'a',20:'b',21:'b',22:'c', 23:'b',24:'b',25:'c',26:'a',27:'a',28:'c',29:'a',30:'b'}
+    },
+    15: {
+      L: {1:'b',2:'d',3:'c',4:'d',5:'a',6:'b',7:'a',8:'d',9:'b', 10:'c',11:'e',12:'a',13:'h',14:'b',15:'g', 16:'c',17:'b',18:'c',19:'b',20:'a',21:'b', 22:'g',23:'d',24:'h',25:'e',26:'f',27:'c', 28:'h',29:'a',30:'e'},
+      H: {1:'f',2:'b',3:'f',4:'c',5:'r',6:'c',7:'f',8:'a',9:'f',10:'c', 11:'b',12:'c',13:'c',14:'c',15:'b',16:'a', 17:'c',18:'b',19:'a',20:'b',21:'b',22:'b', 23:'a',24:'b',25:'b',26:'c',27:'b',28:'a',29:'c',30:'c'}
+    }
+  };
+
+  var DETAILS = {"1_L": {"1": {"kw": "Fernsehen / an Qualität eingebüßt", "syn": "vermisse ich schon lange das Niveau (Lucas)", "exp": "Lucas (a) kaygoul blli Tlfaza mabe9ach fiha l-mostawa (Niveau = Qualität)."}, "2": {"kw": "Radio unverzichtbar", "syn": "schalte ich immer sofort meinen Lieblingssender ein (Karoline)", "exp": "Karoline (c) ma t9drch tstghna 3la Radio m3a sba7 bach tfi9."}, "3": {"kw": "Nachrichten im Internet nicht informativ genug", "syn": "die Nachrichten der Infoportale im Internet sind mir zu oberflächlich (Martin)", "exp": "Martin (d) kayjiwh l-akhbar f Internet ghir s7i7iyin (oberflächlich = nicht informativ genug)."}, "4": {"kw": "mehr Zeit mit Computer verbringen", "syn": "Gerne würde ich im Internet einkaufen oder auch mal eine E-Mail schreiben (Hilde)", "exp": "Hilde (b) bghat tst3ml PC ktr bach tchri online w tsift Emails."}, "5": {"kw": "Soziale Netzwerke beruflich", "syn": "Als Firmeninhaber bin ich natürlich auch bei LinkedIn registriert (Martin)", "exp": "Martin (d) 3ndo charika w kayst3ml LinkedIn f l-khdma dyalo."}, "6": {"kw": "Facebook nicht sehr vertrauenswürdig", "syn": "Was Facebook betrifft, bin ich etwas zurückhaltend (Lucas)", "exp": "Lucas (a) ma kayti9ch f kolchi lli kayt7et f Facebook."}, "7": {"kw": "regelmäßig spannende Sendungen", "syn": "Nur sonntags, da weiß ich, dass ich unbedingt den neuen „Tatort“-Krimi sehen muss (Hilde)", "exp": "Hilde (b) kol 7ed katchouf Tatort-Krimi (spannende Sendung)."}, "8": {"kw": "ausgiebig Tageszeitung lesen", "syn": "Tageszeitung, die ich vor der Haustür vorfinde ... nehme mir viel Zeit (Hilde)", "exp": "Hilde (b) katakhd w9tha kaml f 9raya dyal l-jarida (viel Zeit nehmen = ausgiebig)."}, "9": {"kw": "Handy ein Zeitfresser", "syn": "Mein Smartphone habe ich immer in Reichweite und checke regelmäßig (Karoline)", "exp": "Karoline (c) Smartphone kaychghlha 3la l-khdma (von der Arbeit abhalten = Zeitfresser)."}, "10": {"kw": "Erfindung Zahlenlotto", "syn": "Irgendwann ersetzte einfach jemand die Namen durch Zahlen (e)", "exp": "F l-fa9ra kayhdr f Präteritum 3la l-asma2 (Namen) w kifach tbdlo b l-ar9am (Zahlen)."}, "11": {"kw": "Staatskassen auffüllen", "syn": "Von diesem neuen Trend profitierten auch die Könige und Regenten (a)", "exp": "'Sie' w 'Staatskassen' kayrj3o 3la l-molouk (Könige und Regenten)."}, "12": {"kw": "Verbot um 1800 -> 1955", "syn": "Erst 150 Jahre später durften die Spieler sich wieder freuen (d)", "exp": "Bin 1800 w 1955 kayna 150 3am t9riban fach rj3 Lotto msmou7."}, "13": {"kw": "Live ins Wohnzimmer", "syn": "Die Spieler konnten sich also zu Hause davon überzeugen (g)", "exp": "Wohnzimmer katrtabt b zu Hause bach yt2kkdo mn s7b mobachara."}, "14": {"kw": "viel Geld + abhängig -> Staat", "syn": "Deshalb ist es auch mit einer großen Verantwortung verbunden (h)", "exp": "7it fih flous bzaf w idman (abhängig), mrtabt b mas2ouliya kbira."}, "15": {"kw": "Rund 40 Prozent spielen", "syn": "Das Lottospiel ist damit fast ein Volkssport (b)", "exp": "40% nisba kbira bzaf, katkhllih b7al riyada cha3biya (Volkssport)."}, "16": {"kw": "Francesco Schulabschluss", "syn": "bereitet sich auf seinen Schulabschluss vor (b)", "exp": "Kaywjjed l-imti7an niha2i dyal l-mdrasa (Schaustellerabitur)."}, "17": {"kw": "Während des Oktoberfests", "syn": "wechseln die Kinder die Schule nicht (a)", "exp": "F w9t Oktoberfest dima 3 simanat f nafs l-mdrasa."}, "18": {"kw": "Die Stammschule", "syn": "sammelt die Leistungen der Schüler (c)", "exp": "Katjm3 n9at w ta9yimat dyal tlamd mn ga3 l-madaris."}, "19": {"kw": "Was stört Lion?", "syn": "Die Fragen seiner Mitschüler (a)", "exp": "Kaybrztouh l-as2ila d s7abo 3la l-3icha f l-volksfest."}, "20": {"kw": "Lions Berufswunsch", "syn": "Berufswunsch steht schon fest (b)", "exp": "M9rrer blli ghaykoun Schausteller w 7olmo bayn."}, "21": {"kw": "Was fasziniert Francesco?", "syn": "Die ständige Veränderung (a)", "exp": "Kay3jbo sfar w tbddal d-dima."}, "22": {"kw": "Lärmbelästigung Arbeitsplatz", "syn": "Alisa, Mannheim (d)", "exp": "Sda3 f l-khedma w Großraumbüro."}, "23": {"kw": "Lärm ist oft subjektiv", "syn": "Tom, Chemnitz (f)", "exp": "Sda3 kayb9a nisbi 3la 7sab kol wa7d."}, "24": {"kw": "Stressauslösern positiven Sinn", "syn": "Veronika, Saarbrücken (g)", "exp": "I3ta2 m3na ijabi l sda3 (reframing)."}, "25": {"kw": "Wohlbefinden", "syn": "Leonie, Westerland (b)", "exp": "Ta2tir sda3 3la l-jassad w n-nafs."}, "26": {"kw": "Verkehrslärm Maßnahmen", "syn": "Christa, Wuppertal (h)", "exp": "Ijra2at ded sda3 dyal tri9."}, "27": {"kw": "Natur als Lärmverursacher", "syn": "Lars, Füssen (e)", "exp": "Sda3 dyal t-tabi3a b7al r-r3ad w l-chlallat."}, "28": {"kw": "§ 28 -> Nachtruhe", "syn": "Nachtruhe (e)", "exp": "L-hodou2 b llil ibtida2an mn 22:00."}, "29": {"kw": "§ 29 -> Umwelt", "syn": "Umwelt (h)", "exp": "L-i9tisad f l-ma w d-do w 7imayat l-bi2a."}, "30": {"kw": "§ 30 -> Notfall", "syn": "Verhalten im Notfall (a)", "exp": "Kifach tsrref f 7alat 7ari9 aw khatar."}}, "1_H": {"1": {"kw": "Jugendlicher ruft bei Fitness-Studio an", "syn": "„Fit und Stark“, Paul am Apparat / Bietet ihr Ski-Gymnastik an?", "exp": "Richtig: Chab kay3iyet l Fitness-Studio w kayswwel 3la Ski-Gymnastik."}, "2": {"kw": "Wann findet Ski-Gymnastik statt?", "syn": "ob sich eine Mindestzahl von Teilnehmern einschreibt", "exp": "Khass ytsjjel 3adad kafi dyal l-mocharkin (Mindestzahl = genügend Teilnehmer)."}, "3": {"kw": "Sehenswürdigkeit empfohlen", "syn": "besondere Aufführung in der Großen Orangerie empfehlen", "exp": "Falsch: Kayns7o b 7afl mousi9i (Aufführung) machi b ziyarat ma3lama."}, "4": {"kw": "Bei der Veranstaltung kann man...", "syn": "Meisterwerke des Barock und der Romantik", "exp": "Tsm3 mousi9a mn 3osour mokhtalifa (Barock & Romantik = verschiedene Epochen)."}, "5": {"kw": "verlangt Bibliotheksausweis", "syn": "Ja, aber nur mit einem Bibliotheksausweis", "exp": "Richtig: L-mowaddafa tlbat bita9at l-mktaba."}, "6": {"kw": "Was möchte die Jugendliche?", "syn": "Bücher mit Bibliotheksausweis von meinem Bruder ausleihen", "exp": "Bghat tsllef ktouba bla bita9a dyalha (b bita9at khouha)."}, "7": {"kw": "unterhalten sich über einen Zahnarzt", "syn": "Spritze in den Unterkiefer gegeben und nun immer noch alles taub", "exp": "Falsch: Kayhdro 3la l-bnj (Betäubung) w d-dersa machi 3la t-tbib."}, "8": {"kw": "Die Betäubung dauert...", "syn": "Spätestens nach drei Stunden ist alles wieder in Ordnung", "exp": "K7ed a9sa 3 sway3 (spätestens nach 3 Stunden = höchstens 3 Stunden)."}, "9": {"kw": "hält eine Linguistik-Vorlesung", "syn": "Ich begrüße Sie zur Prüfung im Fach Linguistik", "exp": "Falsch: Hada imti7an (Prüfung) machi mo7adara (Vorlesung)."}, "10": {"kw": "Ergebnisse erhalten die Prüflinge...", "syn": "unter Ihrer Uni-E-Mail zugeschickt", "exp": "Ghadi ytwsslo b nata2ij f Uni-E-Mail (über das Internet)."}, "11": {"kw": "Leser, die gern Krimis lesen", "syn": "Unter Krimi-Liebhabern sind Sie recht bekannt", "exp": "3ocha9 Krimi ghaliban kay3rfo Lisa Graf-Riemann."}, "12": {"kw": "Woher Inspiration?", "syn": "Das hat oft mit der Region zu tun, in der ich lebe", "exp": "Katjib l-ilham mn l-minta9a lli sakna fiha (Gegend, in der sie wohnt)."}, "13": {"kw": "Was für Figuren?", "syn": "wirkliche Menschen ... mit all ihren Stärken und Schwächen", "exp": "Chakhsiyat b no9at l-9owa w d-do3f (positiven und negativen Seiten)."}, "14": {"kw": "Alfred Hitchcock", "syn": "als „Passant“ durch eine Szene in seinen Filmen lief", "exp": "Kan kaydir dohour sghir f l-aflam dyalo (kleinen Auftritt)."}, "15": {"kw": "Mit einem Co-Autor schreiben", "syn": "Es ist leichter, weil man sich nicht alles allein ausdenken muss", "exp": "Kayn9es 3liha l-khdma (nimmt der Autorin Arbeit ab)."}, "16": {"kw": "Warum Krimi-Verfilmung zustimmen?", "syn": "sehe meinen Figuren zu, höre, wie sie sprechen", "exp": "7it kay3jbha tsm3 chakhsiyat dyalha kayhdro."}, "17": {"kw": "nicht nur Mathematik", "syn": "inzwischen decken wir auch Informatik, Naturwissenschaften, Geschichte ab", "exp": "YouTuber (c) gual blli zado mawad khrin mn ghir Mathematik."}, "18": {"kw": "nicht die übliche Unterrichtssprache", "syn": "Und dabei macht ihr von Jugendsprache Gebrauch", "exp": "Moderatorin (a) hiya lli galt Jugendsprache blast loghat l-9ism."}, "19": {"kw": "nicht nur festes Personal", "syn": "beschäftigen 27, überwiegend freie Mitarbeiter", "exp": "YouTuberin (b) galt 3ndhom freie Mitarbeiter (machi ghir festes Personal)."}, "20": {"kw": "Werbeeinnahmen mehr als kostendeckend", "syn": "erlauben sie uns, auch neue Pläne zu schmieden", "exp": "YouTuber (c) gual blli mada5il l-ichhar katsm7 lihom ydiro machari3 jdad."}, "21": {"kw": "bevorzugen Werbung statt zu bezahlen", "syn": "entweder das oder Sehen gegen Geld ... noch nie jemand gemeckert", "exp": "YouTuber (c) chr7 blli n-nas kayfddlo l-ichhar fabour 3la anhom ykhllso."}, "22": {"kw": "Für gute Schüler vorher keine Nachhilfeangebote", "syn": "Um die kümmert sich ja sonst kaum einer", "exp": "YouTuber (c) gual blli tlamd l-mzyanin ma kanch lli kaydiha fihom f Nachhilfe."}, "23": {"kw": "Spielen wichtig für Kinder, weil...", "syn": "Das kindliche Gehirn kann sich nur durch eigene Erfahrungen weiterentwickeln", "exp": "Dmagh dyal t-tfl kay7taj l-l3b bach yttawwer (ihr Gehirn dies braucht)."}, "24": {"kw": "Gebiet, in dem Kinder spielen", "syn": "brauchen dazu ein möglichst großes Spielrevier", "exp": "Spielrevier = Gebiet, w khasso ykoun kbir (möglichst groß)."}, "25": {"kw": "Woran mangelt es vielen Kindern?", "syn": "fehlt ein Spielraum für freie Aktivitäten ohne Aufsicht", "exp": "Khasshom forsa ydiro 7wayj bla mora9abat l-kbar (ohne Erwachsene)."}, "26": {"kw": "Wie sollten sich Eltern verhalten?", "syn": "Eltern ihre Kinder lediglich inspirieren ... Vorhaben fördern", "exp": "Ychjj3ouhom w y3awnouhom f l-afkar dyalhom."}, "27": {"kw": "Welches Verhalten demotiviert?", "syn": "Eltern, die den Kindern alles vormachen ... demotivieren sie", "exp": "T-tadakhoul w l-mosa3ada l-mostamirra katطيح lihom l-moral (Ständiges Eingreifen)."}, "28": {"kw": "Warum besuchen Familien Museen?", "syn": "Museumsbesuche ... denn Eltern möchten, dass ihre Kinder lernen", "exp": "L-walidin kayddiw wladhom l-mt7af bach yt3llmo 7wayj jdad (Neues lernen)."}, "29": {"kw": "Was erwartet die Schule?", "syn": "setzen Grenzen, verlangen Disziplin und Gehorsam", "exp": "Disziplin und Gehorsam = Regeln beachten."}, "30": {"kw": "Jungen Erwachsenen mangelt es an...", "syn": "fehlt es ihnen häufig an der Motivation ... Lust am Gestalten verloren", "exp": "Ma b9atch 3ndhom l-irada bach ychklo 7wayj b afkarhom (nach ihren Ideen zu formen)."}}, "2_L": {"1": {"kw": "neue Kontakte geknüpft", "syn": "Im Ausland habe ich Europäer aus unterschiedlichsten Ländern kennengelernt (Sarah - b)", "exp": "Sarah t3rrfat 3la nas khtar f sfar."}, "2": {"kw": "Unpünktlichkeit kritisieren", "syn": "Billigflieger mehrstündige Verspätungen haben (c)", "exp": "Ta2akhorات dyal sway3 katn9es far7at l-3otla."}, "3": {"kw": "zusätzliche Kosten", "syn": "enorme Summe für Bus- oder Taxifahrt drauflegen / Speisen teuer (d)", "exp": "Masarif zayda dyal taxi w l-makla."}, "4": {"kw": "Städtereisen bevorzugt", "syn": "Ohne Billigflieger hätte ich nicht so viele europäische Städte gesehen (Sarah - b)", "exp": "Zarat modon oropiya bzaf b taman rkhis."}, "5": {"kw": "Sicherheit / gefährlich", "syn": "skeptisch gegenüber, besonders was Sicherheit betrifft (a)", "exp": "Kaykhaf mn l-khatar w ma kayti9ch f salama dyalhom."}, "6": {"kw": "nicht komfortabel genug", "syn": "mehr Sitzplätze mit geringeren Abständen ... unbequem (d)", "exp": "Blasa d-day9a kat3ddb f rjlin."}, "7": {"kw": "Horizont erweitern", "syn": "neue Perspektiven zu gewinnen (Sarah - b)", "exp": "Katsm7 l-wa7d yktachef afa9 jdida."}, "8": {"kw": "große Gepäckstücke", "syn": "brauche deshalb unbedingt immer einen großen Koffer (d)", "exp": "Khassha valise kbira bzaf f sfar."}, "9": {"kw": "lange Strecken", "syn": "außereuropäische Länder: Südafrika, China, Südamerika (c)", "exp": "Kayfddl ri7lat b3ida kharij Oropa."}, "10": {"kw": "Lücke 10", "syn": "Doch die Vorurteile gegenüber diesem Datum sitzen tief (c)", "exp": "Al-afkar al-mosba9a 3la Freitag 13 ba9ya 3mi9a."}, "11": {"kw": "Lücke 11", "syn": "Sie sind bis zu fünfmal höher als im Monatsdurchschnitt (g)", "exp": "Chahadat t-tibiya katrtfe3 bzaf f had n-nhar."}, "12": {"kw": "Lücke 12", "syn": "Dagegen gilt die Zwölf als „heilig“ (h)", "exp": "Raqm 12 3ndo ramziya moqaddasa f l-gharb."}, "13": {"kw": "Lücke 13", "syn": "Im Gegensatz dazu sprengt die darauf folgende 13 die Glück bringende Ordnung (b)", "exp": "Raqm 13 kaykser dak n-nidam l-mowazen."}, "14": {"kw": "Lücke 14", "syn": "Wegen der Zeitverschiebung war jedoch in Europa bereits Freitag (f)", "exp": "Faraq t-tawqit bin Marikan w Oropa."}, "15": {"kw": "Lücke 15", "syn": "Dafür gibt es einen Fachterminus: (e)", "exp": "Moraha kayji l-mostala7 l-3ilmi l-mowassaf."}, "16": {"kw": "Piano City Zweck", "syn": "Sie ermöglicht es Klavierspielern, vor Publikum zu spielen (b)", "exp": "Katsm7 l-3azifin y3zfo 9ddam j-jomhour."}, "17": {"kw": "Die meisten Gäste", "syn": "sind Unbekannte (a)", "exp": "Nas ma kay3rfouhomch 9bl."}, "18": {"kw": "Vor dem Konzert", "syn": "muss man ein Stück vorspielen (b)", "exp": "Khasso ydir tajriba w y3zf 9t3a 9bl."}, "19": {"kw": "Wo das Konzert stattfindet", "syn": "erfährt man, nachdem man dafür bezahlt hat (c)", "exp": "L-3onwan kayban ghir mor khlas t-ticket."}, "20": {"kw": "In Berlin", "syn": "kann man unterschiedliche Musikstile hören (c)", "exp": "Anwa3 mousiqiya mokhtalifa f khetra."}, "21": {"kw": "Voraussetzung Wahl des Ortes", "syn": "Dass es ein Klavier gibt (a)", "exp": "L-mohim howa wjoud l-pianno f l-blasa."}, "22": {"kw": "Lustprinzip", "syn": "Ulf, Regensburg (f)", "exp": "Makla 3la 7sab ch-chahiya."}, "23": {"kw": "Fleischkonsum moderat", "syn": "Mira, Freiburg (b)", "exp": "Maklat l-l7m b 9yass ma fiha khatar."}, "24": {"kw": "Organisation", "syn": "Evelyn, Zürich (d)", "exp": "T-tandim w t-twjad mospa9 f l-kouzina."}, "25": {"kw": "Fleischersatz Vorsicht", "syn": "Christina, Konstanz (h)", "exp": "L-7adar mn badil l-l7m s-sina3i."}, "26": {"kw": "Ernährungsumstellung Erfolg", "syn": "Kati, Trier (e)", "exp": "Tbdal l-makla w n-natija machi mzyana."}, "27": {"kw": "Ernährung macht fit", "syn": "Luisa, Heidelberg (g)", "exp": "Makla mowazana kat3ti l-liyaqa."}, "28": {"kw": "§ 28 -> Ausleihen", "syn": "Ausleihen von Büchern (f)", "exp": "Chourout tslaf d l-ktouba."}, "29": {"kw": "§ 29 -> Behandlung", "syn": "Behandlung der entliehenen Bücher (e)", "exp": "L-7ifad 3la l-ktoub l-mousst3ara."}, "30": {"kw": "§ 30 -> Aufenthalt", "syn": "Aufenthalt in der Bibliothek (a)", "exp": "Qawa3id l-gelsa f l-khizana."}}, "3_L": {"1": {"kw": "ausschlafen statt frühstücken", "syn": "Lieber schlafe ich eine halbe Stunde länger (c)", "exp": "Manuel kayfddl n-n3as 3la l-ftour."}, "2": {"kw": "variiert Frühstück", "syn": "probiere ich immer wieder neue Kombinationen aus (d)", "exp": "Janine katbdl dima f l-ftour."}, "3": {"kw": "keinen Appetit", "syn": "Nach dem Alkoholgenuss am Vorabend ... keinen Hunger (c)", "exp": "Manuel ma 3ndoch chahiya sba7."}, "4": {"kw": "Auswahl Lebensmittel", "syn": "Für ausgewogenes Frühstück braucht es richtige Kombination (d)", "exp": "Janine katrkkez 3la mowazana."}, "5": {"kw": "Unterstützung Änderung", "syn": "Meine Freundin musste viel Überzeugungsarbeit leisten (a)", "exp": "Markus sa7bto 3awnato bach yftr."}, "6": {"kw": "Abnehmen wichtig", "syn": "Menschen, die abnehmen wollen, sollten morgens nichts essen (b)", "exp": "Person b bghat tn9es l-wazn."}, "7": {"kw": "Leistungen veränderten sich", "syn": "geistig kann ich mehr leisten. Konzentrationsfähigkeit höher (a)", "exp": "Markus t7ssnat l-9odra dyalo."}, "8": {"kw": "außer Haus frühstücken", "syn": "nehme ich eine Kleinigkeit zu mir, am Arbeitsplatz (c)", "exp": "Manuel kayftr f l-khdma."}, "9": {"kw": "Verzicht aus Gesundheitsgründen", "syn": "Fettwerte senken und gleichzeitig abnehmen (c)", "exp": "Person b katkhlli l-ftour l-asbab si7iya."}, "10": {"kw": "Lücke 10", "syn": "Sie sah sich dazu tagelang in den verschiedensten Geschäften um (e)", "exp": "Daniela 9llbat f bzaf d l-m7allat."}, "11": {"kw": "Lücke 11", "syn": "Deshalb beschäftigte sie sich näher mit dem Thema (g)", "exp": "B7tat f mowdo3 l-kssawi l-mousst3mala."}, "12": {"kw": "Lücke 12", "syn": "Ein Teil des Erlöses geht dabei an die ursprüngliche Besitzerin (c)", "exp": "Moulat l-kswa katakhd nasibha."}, "13": {"kw": "Lücke 13", "syn": "Denn jedes ihrer Kleidungsstücke hat ebenfalls eine Geschichte (b)", "exp": "Kol kswa 3ndha 9issa."}, "14": {"kw": "Lücke 14", "syn": "Heute sind die beiden miteinander verheiratet (d)", "exp": "Peggy w Uwe tzwwjo."}, "15": {"kw": "Lücke 15", "syn": "Vielmehr gefällt ihnen die Idee, dass damit schöne Geschichte verbunden ist (h)", "exp": "L-fekra d l-9issa 3ajbahom."}, "16": {"kw": "Wanderung mit Lamas", "syn": "ist sehr langsam (b)", "exp": "L-machi t-tqil m3a Lamas."}, "17": {"kw": "Lama Ali", "syn": "mag es nicht, wenn man es hinten anfasst (c)", "exp": "Ali makay7mlch lli y9iso mn lour."}, "18": {"kw": "Warum nicht reiten?", "syn": "Weil ihre Wirbelsäule zu schwach dafür ist (b)", "exp": "Dher dyalhom ma kayst7mlch t-teql."}, "19": {"kw": "Therapeutische Wirkung", "syn": "Sie sind zurückhaltend und ruhig (c)", "exp": "L-hodou2 dyalhom kayrriye7."}, "20": {"kw": "Beim Hinaufsteigen", "syn": "wird auch eine Pause eingelegt (a)", "exp": "Istira7a f tri9 l-fo9."}, "21": {"kw": "Am Ende der Tour", "syn": "hat niemand mehr Kraft (b)", "exp": "L-3ya w n-n3as kayghlb 3lihom."}, "22": {"kw": "Gemeinsame Interessen", "syn": "Lena, Frankfurt (c)", "exp": "Ihtimamat mouchtaraka."}, "23": {"kw": "Konflikte thematisieren", "syn": "Janne, München (g)", "exp": "L-kalam 3la l-machakil."}, "24": {"kw": "Neue schließt alte nicht aus", "syn": "Valeska, Hildesheim (e)", "exp": "Sada9a jdida bla ma t7bs l-9dima."}, "25": {"kw": "Verbindung löst sich unmerklich", "syn": "Ingo, Wolfsburg (b)", "exp": "Sada9a katssali b chkl tadriji."}, "26": {"kw": "Gefühl vernachlässigt", "syn": "Silke, Magdeburg (d)", "exp": "L-i7sas b l-ihmal."}, "27": {"kw": "Ende als Chance", "syn": "Volker, Kempten (h)", "exp": "Nihayat sada9a b7al forsa."}, "28": {"kw": "§ 28 -> Lärmschutz", "syn": "Schutz vor Lärm (e)", "exp": "7imayat l-hodou2."}, "29": {"kw": "§ 29 -> Abfall", "syn": "Abfallbeseitigung (f)", "exp": "Tadbir l-azbal."}, "30": {"kw": "§ 30 -> Sicherheit", "syn": "Sicherheit (c)", "exp": "Chourout s-salama."}}, "4_L": {"1": {"kw": "Auf Absage gefasst", "syn": "Auf eine Ablehnung war ich also gefasst (b)", "exp": "Florian kan mwjjed rasso l-rafd."}, "2": {"kw": "lange Wartezeit", "syn": "Bei mir hat es sechs Monate gedauert (d)", "exp": "Kevin tsnnat 6 chhour."}, "3": {"kw": "Fächerwahl überlegen", "syn": "sich die geplante Kombination gut zu überlegen (d)", "exp": "Kevin kats7 b t-tafkir l-mzyan."}, "4": {"kw": "Antrag während Studium", "syn": "eigenes Studium zu erstellen: Biologiegeschichte (b)", "exp": "Florian dfe3 talab w howa kay9ra."}, "5": {"kw": "Freiheit bei Studiengängen", "syn": "Studierende das Recht haben sollten ihren Studienverlauf mitzubestimmen (c)", "exp": "Sarah katnadi b 7orriyat l-khtiyar."}, "6": {"kw": "anfänglich unzufrieden", "syn": "existierenden Studienrichtungen wollten nicht so recht passen (b)", "exp": "Florian ma l9ach rasso f l-bidayat."}, "7": {"kw": "abgeraten von individuellem Studium", "syn": "Viele haben mir auch davon abgeraten (a)", "exp": "Carina nshouha bzaf d n-nas blach."}, "8": {"kw": "durch Bekannten erfahren", "syn": "Von einem Freund hatte ich von der Möglichkeit gehört (c)", "exp": "Sarah s7abatha 3awdo liha."}, "9": {"kw": "Ablehnung bekommen", "syn": "Leider wurde mein Antrag abgelehnt (c)", "exp": "Sarah trfd lih l-talab."}, "10": {"kw": "Lücke 10", "syn": "Dieses Wissen machte Pilates zur Grundlage (h)", "exp": "Pilates sta3ml dakchi li t3llmo."}, "11": {"kw": "Lücke 11", "syn": "Aus dem kränklichen Kind war ein kräftiger Mann geworden (e)", "exp": "Mn tfl mridd wlla rajl s7i7."}, "12": {"kw": "Lücke 12", "syn": "Doch nun musste Pilates kreativ werden (g)", "exp": "Khtara3 alat w 7oloul jdida."}, "13": {"kw": "Lücke 13", "syn": "Die Ärzte bestätigten die Wirksamkeit seiner Methode (a)", "exp": "L-atibba2 chhado b najaho."}, "14": {"kw": "Lücke 14", "syn": "Schauspieler und berühmte Broadwaytänzer zu Stammkunden (b)", "exp": "L-fnnanin kanw awwal zobana2."}, "15": {"kw": "Lücke 15", "syn": "Sein Lebenswerk ist der Versuch, diese verlorene Einheit wiederherzustellen (d)", "exp": "I3adat tawazon l-jassad w r-rou7."}, "16": {"kw": "Viele Pflanzen", "syn": "Viele Pflanzen (b)", "exp": "L-khedora katziyed f l-3omr."}, "17": {"kw": "Einfluss Natur auf Gesundheit", "syn": "Einfluss der Natur auf den Gesundheitszustand (a)", "exp": "L-b7t 3la ta2tir t-tabi3a."}, "18": {"kw": "Zustand verbessert sich", "syn": "Ihr allgemeiner Zustand verbessert sich (c)", "exp": "L-khedma f l-7adiqa kat7ssen l-7ala."}, "19": {"kw": "helfen beim Anbau", "syn": "helfen den Patienten beim Anbau von Gemüse (b)", "exp": "L-mommarridat kay3awnou l-marda."}, "20": {"kw": "leiden an Krankheiten", "syn": "leiden häufiger an bestimmten Krankheiten (b)", "exp": "Kibar s-sinn kay3aniw mn amrad."}, "21": {"kw": "kostet nicht viel", "syn": "kostet nicht viel Geld (a)", "exp": "Zira3a f l-balkon rkhisa."}, "22": {"kw": "kulinarischer Genuss", "syn": "Max, Kempten (d)", "exp": "Sport m3a l-makla."}, "23": {"kw": "Umweltbewusstsein", "syn": "Lena, Rosenheim (h)", "exp": "I7tiram t-tabi3a."}, "24": {"kw": "Preiswert für Städter", "syn": "Claudia, München (b)", "exp": "Sport rkhis b 15 Euro."}, "25": {"kw": "wetterbedingt", "syn": "Sarah, Gräfelfing (g)", "exp": "Katrtabt b l-jaw."}, "26": {"kw": "Recht auf Ruhe", "syn": "Christoph, Bad Aibling (f)", "exp": "7eqq t-tabi3a f l-hodou2."}, "27": {"kw": "Alternative zu Indoor", "syn": "Sebastian, Augsburg (c)", "exp": "Blast salle d sport dakhiliya."}, "28": {"kw": "§ 28 -> Teilnahmevoraussetzungen", "syn": "Teilnahmevoraussetzungen (h)", "exp": "Chourout l-moucharaka."}, "29": {"kw": "§ 29 -> Ausweispflicht", "syn": "Ausweispflicht (e)", "exp": "Woujoub l-idla2 b l-bita9a."}, "30": {"kw": "§ 30 -> Aufsicht", "syn": "Aufsicht (b)", "exp": "L-mora9aba w l-7imaya."}}, "5_L": {"1": {"kw": "Angst vor Komplikationen", "syn": "Ich würde mir nie ein Piercing stechen lassen ... Angst vor Komplikationen (d)", "exp": "Olaf kaykhaf mn l-mo مضاعفات."}, "2": {"kw": "Kälte unangenehm", "syn": "wenn ich in die Kälte komme ... Unterlippe abgefroren (c)", "exp": "L-berd kay2etter 3la ch-chafayf."}, "3": {"kw": "gut sichtbares Piercing", "syn": "Weil man das aber nicht richtig sieht, entschied ich mich für die Lippe (c)", "exp": "Bghat piercing yban mzyan."}, "4": {"kw": "Piercing am Ohr", "syn": "Ich habe ein Helix-Piercing seit ungefähr einem Jahr (b)", "exp": "Helix f l-wden."}, "5": {"kw": "alternative Heilmethoden", "syn": "Traditioneller Chinesischer Medizin beschäftigt (d)", "exp": "Ihtimam b t-tibb s-sini."}, "6": {"kw": "größere Schmerzen erwartet", "syn": "Alles ... über Schmerzen hat sich als komplett übertrieben herausgestellt (c)", "exp": "L-7riq kan 9ll bzaf mlli tw993at."}, "7": {"kw": "falsches Verhalten danach", "syn": "Kurz nach dem Piercing bin ich in den Urlaub gefahren ... Baden und Sonnen (a)", "exp": "Mchat t3oum w tchmmech f l-3otla."}, "8": {"kw": "Reinigung Schmerzen", "syn": "Am Anfang hat es wehgetan, wenn ich es gesäubert habe (c)", "exp": "N-nadafa kan katdrror f l-lawwal."}, "9": {"kw": "Beschwerden in der Nacht", "syn": "vor allem das Schlafen auf der Seite (b)", "exp": "N-n3as 3la j-jenb kaydrr."}, "10": {"kw": "Lücke 10", "syn": "Für sie war das Reisen allerdings alles andere als ein Vergnügen (c)", "exp": "Sfar kan 3adab l l-mouhajirin."}, "11": {"kw": "Lücke 11", "syn": "Nach und nach entwickelten die Reedereien dafür eine perfekte Logistik (g)", "exp": "Tatwir l-logistique d l-bawakher."}, "12": {"kw": "Lücke 12", "syn": "Deshalb wurden nur sehr wenig Tickets verkauft (a)", "exp": "Mabi3at 9lila f l-bard."}, "13": {"kw": "Lücke 13", "syn": "Bald folgten andere Schiffe auf neuen Routen von Westindien bis hin zur Karibik (b)", "exp": "Khotout jdida f l-karayib."}, "14": {"kw": "Lücke 14", "syn": "Man vergnügte sich an Deck und in den nobel ausgestatteten Salons (h)", "exp": "L-anacha w l-7afalat f salonat."}, "15": {"kw": "Lücke 15", "syn": "So bot man auch für den Mittelstand bezahlbare Reisen an (e)", "exp": "Ri7lat f moutanawal t-taba9a l-motawassita."}, "16": {"kw": "Modepräsenz Werbung", "syn": "Modefotografie dient der Werbung (a)", "exp": "Taswir l-azya2 l l-ichhar."}, "17": {"kw": "Daniela Wicke Verdienst", "syn": "könnte mit andersartigen Fotos mehr verdienen (b)", "exp": "Kano y9dro ykouno flous ktr b taswir akhor."}, "18": {"kw": "Kritik Perfektionsindustrie", "syn": "hat Daniela Wickes Karriere ermöglicht (c)", "exp": "Intiqad l-kamal 3taha forsa tnj7."}, "19": {"kw": "Terror der Schönheit", "syn": "Dass alle Abweichungen vom Ideal als unschön gelten (b)", "exp": "Koll ma khoroj 3la l-i3tiyad kaytsmma machi zwin."}, "20": {"kw": "Faszinierende Fotos", "syn": "Fotografin und Model eine gute persönliche Beziehung haben (b)", "exp": "3ala9a mzyana bin l-mossawwir w l-model."}, "21": {"kw": "Modenschauen selten", "syn": "Was sie in einem Model sucht, kann sie dort nicht sehen (c)", "exp": "Ma katl9ach dakchi li katbghi f defile."}, "22": {"kw": "Männer klare Äußerungen", "syn": "Uwe, Landsberg (f)", "exp": "R-rjal kayfddlo l-wadah."}, "23": {"kw": "Fragestellungen nicht gleicher Zweck", "syn": "Olga, Ravensburg (g)", "exp": "As2ila 3ndha ahdaf mokhtalifa."}, "24": {"kw": "Vorliebe Gesprächsthemen", "syn": "Malte, Kiel (c)", "exp": "Mawadi3 l-kalam mokhtalifa."}, "25": {"kw": "Sprache als Dominanz", "syn": "Frauke, Bergen (b)", "exp": "Lougha l l-haymana."}, "26": {"kw": "Art hängt von Persönlichkeit ab", "syn": "Ilona, Pirmasens (h)", "exp": "Katt3llq b chakhsiya machi l-jins."}, "27": {"kw": "Wortschatz Emotionen", "syn": "Steffen, Soest (e)", "exp": "Mo3jam kbir d l-a7asis 3nd l-3yalat."}, "28": {"kw": "§ 28 -> Sicherheit", "syn": "Sicherheit (b)", "exp": "Qawa3id s-salama f l-piscin."}, "29": {"kw": "§ 29 -> Hygiene", "syn": "Hygiene (e)", "exp": "N-nadafa w d-douch 9bl l-3owm."}, "30": {"kw": "§ 30 -> Verhalten gegenüber anderen", "syn": "Verhalten gegenüber anderen Badbesuchern (g)", "exp": "I7tiram n-nas l-akhrin."}}, "6_L": {"1": {"kw": "Studium mitfinanzieren", "syn": "arbeite ich an zwei Nachmittagen in einer Buchhandlung (c)", "exp": "L-khedma f mktaba bach ykhlles 3la 9rayto."}, "2": {"kw": "andere Art Leistungsbeurteilung", "syn": "Multiple-Choice-System prüft in keinster Weise tatsächliche Wissen ab (b)", "exp": "Intiqad nizam QCM."}, "3": {"kw": "mit Lehrpersonal zufrieden", "syn": "Betreuung durch Professoren und Dozenten ist ausgezeichnet (a)", "exp": "Asatida kayt3amlo mzyan."}, "4": {"kw": "öfter amüsieren gehen", "syn": "Ausgehen und Feiern ist so gut wie nicht möglich (c)", "exp": "Ma kaynach forsa d l-khoroj w l-fawja."}, "5": {"kw": "Lernatmosphäre zufrieden", "syn": "Universität Saarbrücken ... geht richtig familiär zu (d)", "exp": "Jaw 3a2ili w zwin f l-jami3a."}, "6": {"kw": "Freiheit Lehrveranstaltungen", "syn": "Problem mit Anwesenheitspflicht bei Laborstunden (a)", "exp": "L-7odour l-ijbari mday9o."}, "7": {"kw": "sehr lernintensiv", "syn": "Lernpensum enorm, Stundenpläne vollgestopft (c)", "exp": "Droghe kbira w drassa 9as7a."}, "8": {"kw": "Lage ausschlaggebend", "syn": "hauptsächlich auf die Nähe zu meiner Familie geachtet (d)", "exp": "L-9orb mn l-3a2ila howa l-mohim."}, "9": {"kw": "zu theoretisch", "syn": "würde mir mehr Praxisbezug wünschen (b)", "exp": "Khass tatbiq 3mali ktr mn n-nadari."}, "10": {"kw": "Lücke 10", "syn": "Bekanntester Fahrgast jedoch ist ein kleiner Elefant (f)", "exp": "L-fil sghir Tuffi howa achhar rakib."}, "11": {"kw": "Lücke 11", "syn": "So wurde auch eine Werbefahrt Tuffis organisiert (b)", "exp": "Rihlat ichhar l l-fil."}, "12": {"kw": "Lücke 12", "syn": "Vorgesehen war nur eine Kurzfahrt (a)", "exp": "Kan mowa9a3 ri7la 9sira walakin w93 ma lam yakon f l-7isban."}, "13": {"kw": "Lücke 13", "syn": "Dabei hatte sie noch einmal Glück im Unglück (h)", "exp": "Tuffi njat bla jar7 kbir."}, "14": {"kw": "Lücke 14", "syn": "Auf Ansichtskarten behalf man sich mit Fotomontagen (e)", "exp": "Isti3mal montage 7it l-mossawwir ma sowerch."}, "15": {"kw": "Lücke 15", "syn": "Sie starb Jahre später in dessen Winterlager (d)", "exp": "Wafat d l-fil mn ba3d snin."}, "16": {"kw": "Schlaraffia Treffen", "syn": "wollen sie vor allem fröhlich sein (b)", "exp": "Kayjtm3o bach ykono nachitin w da7kin."}, "17": {"kw": "Aufnahme Schlaraffia", "syn": "Deutsch sprechen (a)", "exp": "Darori thdr b l-almaniya."}, "18": {"kw": "Grund Entstehung", "syn": "Aus Protest gegen die Arroganz der alten Vereinigungen (b)", "exp": "I7tijaj 3la takabbor d jam3iyat l-9dima."}, "19": {"kw": "Ritterzeit Sitten", "syn": "war von Anfang an ironisch gemeint (c)", "exp": "Kan b chkl sokhri w da7k."}, "20": {"kw": "Wortschöpfungen", "syn": "sollen an das Mittelalter erinnern (b)", "exp": "Kalimat bach tfkkr b l-3osour l-wousta."}, "21": {"kw": "Verein Gründung", "syn": "wurde 1859 gegründet (a)", "exp": "T-tasis kan 3am 1859."}, "22": {"kw": "Riskantes Verhalten Sprayer", "syn": "Ilka, Wolfsburg (b)", "exp": "L-khatar d t-tslloq w trainat."}, "23": {"kw": "Künstlerische Talente", "syn": "Mario, Cuxhaven (h)", "exp": "Iktichaf fnnanin jdad."}, "24": {"kw": "Hohe Ausgaben Entfernung", "syn": "Konstantin, Magdeburg (f)", "exp": "Msalif kbira f n-nadafa."}, "25": {"kw": "Ausdrucksform Jugendkultur", "syn": "Simone, Ingolstadt (e)", "exp": "Ta3bir chababi w fnn."}, "26": {"kw": "Nicht generell unter Strafe", "syn": "Axel, Klagenfurt (d)", "exp": "Takhsis amakin 9anouniya."}, "27": {"kw": "Schutz der Gesundheit", "syn": "Larissa, Koblenz (g)", "exp": "7imayat r-riya mn l-gaz."}, "28": {"kw": "§ 28 -> Wie kann man gewinnen?", "syn": "Wie kann man gewinnen? (g)", "exp": "Kifach tcharak f tirage."}, "29": {"kw": "§ 29 -> Wer kann mitmachen?", "syn": "Wer kann mitmachen? (d)", "exp": "Chkoun 3ndo l-7eqq yl3eb."}, "30": {"kw": "§ 30 -> Benachrichtigung", "syn": "Wie erfahre ich, ob ich gewonnen habe? (b)", "exp": "Kifach t3ref wach rbe7ti."}}, "7_L": {"1": {"kw": "jemand bei mir abschreibt", "syn": "Mich nervt es aber am meisten, wenn jemand bei mir abschreibt (c)", "exp": "Kay3ssbo lli kayn9ol 3lih."}, "2": {"kw": "überhaupt nicht interessiert", "syn": "Französisch ... interessiert mich überhaupt nicht (d)", "exp": "Madda ma 7amlahach ga3."}, "3": {"kw": "Freunde erklären", "syn": "gibt es immer noch Freunde, die es erklären können (c)", "exp": "S7ab kayfssro l-dorouss."}, "4": {"kw": "Spicken total unfair", "syn": "Spicken ist einerseits total unfair gegenüber Mitschülern (b)", "exp": "N-n9la machi ma39oula m3a s7abk."}, "5": {"kw": "Defizit ausgleichen", "syn": "Defizit an Arbeits- und Lernbereitschaft auszugleichen (c)", "exp": "Isti3mal n9la blast l-khedma."}, "6": {"kw": "nie abschreiben", "syn": "Ganz anders ist es da mit Abschreiben, das würde ich nie tun (a)", "exp": "3mro ma yn9ol 3la chi 7ed."}, "7": {"kw": "früher alles auswendig", "syn": "Früher musste man alles auswendig können (a)", "exp": "Zman kan kolchi 7fada."}, "8": {"kw": "Inhalt zusammenfassen", "syn": "kurz und prägnant den Inhalt zusammenfassen (b)", "exp": "Talkhis kaykhlli l-fekra trsekh."}, "9": {"kw": "Angst mindern", "syn": "mindert es die Angst vollkommen ohne Plan zu sitzen (b)", "exp": "Katmss7 l-khowf f l-imti7an."}, "10": {"kw": "Lücke 10", "syn": "Liebeskummer stürzt ihn in tiefe Verzweiflung (f)", "exp": "L-7ob w l-firaq f s-senn d l-mourahaqa."}, "11": {"kw": "Lücke 11", "syn": "Sowohl von den Jugendlichen selbst, als auch von den Erwachsenen (h)", "exp": "Ta9a kbira mn t-tarafayn."}, "12": {"kw": "Lücke 12", "syn": "Das konnten die Eltern, die Lehrer oder gar der große Bruder sein (d)", "exp": "Soltat l-walidin w l-asatida."}, "13": {"kw": "Lücke 13", "syn": "Gleichzeitig findet er Gefallen daran zu provozieren (g)", "exp": "L-istifzaz d l-kbar."}, "14": {"kw": "Lücke 14", "syn": "Am liebsten würde er bis mittags schlafen (c)", "exp": "N-n3as 7ta l-dohr."}, "15": {"kw": "Lücke 15", "syn": "Denn damals konnte man noch lachen, übermütig und albern sein (a)", "exp": "Dikrayat d d-da7k w n-nachat."}, "16": {"kw": "U-Boot Überlebende", "syn": "konnten die meisten gerettet werden (c)", "exp": "42 wa7d njo mn l-gharaq."}, "17": {"kw": "Die Jakobsens", "syn": "sind Unterwasserfilmer (a)", "exp": "Mossawwirin ta7t l-ma."}, "18": {"kw": "Lage des U-Boots", "syn": "war einer der Schwerpunkte in der Arbeit des Ehepaars Jakobsen (b)", "exp": "Kan hadaf asasi f l-khedma dyalhom."}, "19": {"kw": "Plexiglas Tauchboot", "syn": "Um dem Druck des Wassers standzuhalten (c)", "exp": "Bach y9awem daght l-ma f 9a3 l-ba7r."}, "20": {"kw": "Reaktion Jakobsens", "syn": "begeisterte (b)", "exp": "Far7anin bzaf b l-iktichaf."}, "21": {"kw": "Ziel des Projekts", "syn": "Die Entstehung von Korallenriffs zu erforschen (a)", "exp": "Dirasat ch-cho3ab l-marjaniya."}, "22": {"kw": "Amelie, Kiel", "syn": "Amelie, Kiel (d)", "exp": "Khedma m3a hochbegabte."}, "23": {"kw": "Emilia, Leipzig", "syn": "Emilia, Leipzig (c)", "exp": "A9sam sghira khassa."}, "24": {"kw": "Lothar, Neuhausen", "syn": "Lothar, Neuhausen (h)", "exp": "Mocharaka w t-tanafos."}, "25": {"kw": "Julia, Wolfsburg", "syn": "Julia, Wolfsburg (g)", "exp": "T-talamid l-mojtahidin."}, "26": {"kw": "Nikos, Brühl", "syn": "Nikos, Brühl (b)", "exp": "A9sam mowajjaha."}, "27": {"kw": "Claus, Cottbus", "syn": "Claus, Cottbus (e)", "exp": "Tafawoq w l-mowazana."}, "28": {"kw": "§ 28 -> Aufbewahrung", "syn": "Aufbewahrung (d)", "exp": "7ifd l-ashya2 f l-garderobe."}, "29": {"kw": "§ 29 -> Verhalten", "syn": "Verhalten in der Hamburger Kunsthalle (a)", "exp": "Qawa3id s-slook f l-mat7af."}, "30": {"kw": "§ 30 -> Verstöße", "syn": "Verstöße gegen die Anweisungen (h)", "exp": "3o9oubat mokhalafat n-nidam."}}, "8_L": {"1": {"kw": "nicht beschuldigt", "syn": "Isabel (c)", "exp": "Isabel ma tt-hmathach l-idara."}, "2": {"kw": "Verantwortung auf Opfer", "syn": "Harry (d)", "exp": "Harry kayloom d-dahiya."}, "3": {"kw": "vermeidet Opferkritik", "syn": "Viktoria (b)", "exp": "Viktoria ma katloomch d-dahaya."}, "4": {"kw": "leid getan gemobbt zu haben", "syn": "Carsten (a)", "exp": "Carsten nadem 7it dar mobbing."}, "5": {"kw": "im Internet genötigt", "syn": "Isabel (c)", "exp": "Isabel t3rdat l t-tahdid f net."}, "6": {"kw": "neue Variante Beleidigungen", "syn": "Harry (d)", "exp": "Harry kaychofha ghir sban jdid."}, "7": {"kw": "Erlebnis qualvoll", "syn": "Isabel (c)", "exp": "Tajriba kanat mo2lima bzaf."}, "8": {"kw": "beruflich mit Cybermobbing", "syn": "Viktoria (b)", "exp": "Viktoria khedmatha m3a had l-mowdo3."}, "9": {"kw": "mehr Unterstützung Erwachsene", "syn": "Isabel (c)", "exp": "Isabel kattrjja l-mosa3ada mn l-kbar."}, "10": {"kw": "Lücke 10", "syn": "Darauf befindet sich ein Transportbehälter mit den Sendungen (g)", "exp": "Sandouq n-naql f l-robot."}, "11": {"kw": "Lücke 11", "syn": "Das ist etwas schneller als Schrittgeschwindigkeit (h)", "exp": "Sor3a kter chwiya mn l-machi."}, "12": {"kw": "Lücke 12", "syn": "Bleibt er stehen, hält auch der Roboter an (d)", "exp": "Ila w9ef l-postier kayw9ef l-robot."}, "13": {"kw": "Lücke 13", "syn": "Das Projekt befindet sich vorerst noch in der Testphase (f)", "exp": "L-machro3 ba9i f mar7alat t-tajriba."}, "14": {"kw": "Lücke 14", "syn": "Das übernimmt nach wie vor der Postbote (a)", "exp": "L-postier howa lli kaykmmel t-tawzi3."}, "15": {"kw": "Lücke 15", "syn": "Tatsache ist, dass er keine Mitarbeiter und keine Jobs gefährdet (c)", "exp": "L-robot ma ghaydich khedmat n-nas."}, "16": {"kw": "Finanzberater Grund", "syn": "weil sie sich nicht mit Geldangelegenheiten auskennen (c)", "exp": "L-mannequins ma kayfhmouch f l-flous."}, "17": {"kw": "sparsam sein", "syn": "weil ihre Karriere schnell beendet sein kann (a)", "exp": "L-karira dyalhom 9sira."}, "18": {"kw": "Leistung Rogalski", "syn": "Er prüft ihre Bankkonten (a)", "exp": "Kayra9eb l-7isabat l-bankiya."}, "19": {"kw": "In Rogalskis Büro", "syn": "sind die Mädchen kaum als Models zu erkennen (b)", "exp": "Kaybano bnat 3adiyin bla mquillage."}, "20": {"kw": "Spezialisierung Grund", "syn": "Weil das eine Marktlücke war (b)", "exp": "Forsa f s-soo9 ma kanch lli khdam fiha."}, "21": {"kw": "meiste Geld momentan", "syn": "mit reichen Familien (b)", "exp": "L-flous l-ktira ba9ya mn l-3a2ilat l-ghaniya."}, "22": {"kw": "Juliane, Weimar", "syn": "Juliane, Weimar (e)", "exp": "Homöopathie f Weimar."}, "23": {"kw": "Ludwig, Hoffenheim", "syn": "Ludwig, Hoffenheim (g)", "exp": "T-tibb l-badil."}, "24": {"kw": "Carmen, Basel", "syn": "Carmen, Basel (b)", "exp": "Tajriba f Basel."}, "25": {"kw": "Natascha, Heidelberg", "syn": "Natascha, Heidelberg (h)", "exp": "T-tbib kaychouf l-insan kaml."}, "26": {"kw": "Stefanie, Dortmund", "syn": "Stefanie, Dortmund (d)", "exp": "Flous s-saydaliya."}, "27": {"kw": "Thomas, Rostock", "syn": "Thomas, Rostock (f)", "exp": "Mosa3ada m3a l-3ilaj l-kima2i."}, "28": {"kw": "§ 28 -> Erkrankung", "syn": "Erkrankung (g)", "exp": "L-marad f l-la salle."}, "29": {"kw": "§ 29 -> Preisnachlass", "syn": "Preisnachlass (a)", "exp": "Takfidat l l-mocharkin."}, "30": {"kw": "§ 30 -> Verbotene Substanzen", "syn": "Verbotene Substanzen (e)", "exp": "L-mmnou3at بحال المنشطات."}}, "9_L": {"1": {"kw": "Entwicklung beunruhigt", "syn": "Elena (d)", "exp": "Elena khayfa mn tatwwor f Oropa."}, "2": {"kw": "persönliche Verantwortung", "syn": "Simon (a)", "exp": "Simon kaytleb mas2ouliya chakhsiya."}, "3": {"kw": "gegen Gesichtserkennung Einkauf", "syn": "Martina (b)", "exp": "Martina ded t-t3rrof 3la l-wajh f l-m7allat."}, "4": {"kw": "Gesichtserkennung Angst", "syn": "Elena (d)", "exp": "Elena katkhouf mn had t-ti9niya."}, "5": {"kw": "App für Fotos", "syn": "René (c)", "exp": "René kaykhdem app d t-tsawer."}, "6": {"kw": "Nutzung Datenbanken", "syn": "Elena (d)", "exp": "Elena mchwcha mn 9awa3id l-bayanat."}, "7": {"kw": "App Fernsehprogramm", "syn": "René (c)", "exp": "René 3ajbah app d t-tlfaza."}, "8": {"kw": "Plätze überwacht froh", "syn": "Martina (b)", "exp": "Martina fr7ana b l-kamirat f ch-chari3."}, "9": {"kw": "keine App für Fotoalbum", "syn": "Simon (a)", "exp": "Simon ma kay7tajch app l l-album."}, "10": {"kw": "Lücke 10", "syn": "Das hatte Auswirkungen auch auf die freie Zeit (e)", "exp": "Ta2tir 3la l-wa9t l-kawi."}, "11": {"kw": "Lücke 11", "syn": "Das lässt sich wissenschaftlich leicht beantworten (g)", "exp": "Jawab 3ilmi sahl."}, "12": {"kw": "Lücke 12", "syn": "Deshalb macht Langeweile so unzufrieden (c)", "exp": "L-qalaq kaykhelli l-wa7d ma mrta7ch."}, "13": {"kw": "Lücke 13", "syn": "Fernsehen, Musik hören, mit Handy spielen (d)", "exp": "Amtsila d anchtat l-faragh."}, "14": {"kw": "Lücke 14", "syn": "Langeweile beflügelt die Fantasie und Kreativität (a)", "exp": "L-moulal kaynchct l-ibda3."}, "15": {"kw": "Lücke 15", "syn": "Ganz im Gegenteil, es arbeitet weiter (h)", "exp": "D-dmagh kaykmmel khedmto."}, "16": {"kw": "Lenka Dokumentation", "syn": "Als sie schreiben lernte (a)", "exp": "Mlli t3llmat tktb f s-soghro."}, "17": {"kw": "Junge Forscher", "syn": "genau zu beobachten (b)", "exp": "L-mola7ada d-da9i9a."}, "18": {"kw": "Bei Lenka", "syn": "werden hilfsbedürftige Tiere aufgenommen (a)", "exp": "Kaysta9blo l-7ayawanat l-mou7taja."}, "19": {"kw": "Freilassung Tiere", "syn": "sieht Lenka inzwischen ein (b)", "exp": "Fhmat bli blast l-7ayawanat f l-ghaba."}, "20": {"kw": "Projekt Lenka", "syn": "zu beobachten, was ihre Tiere gern fressen (b)", "exp": "Dirasat maklat l-7ayawanat."}, "21": {"kw": "Lenka Ekel", "syn": "ekelt sich vor Spinnen (c)", "exp": "Katkhaf w katkrfh mn r-rtila."}, "22": {"kw": "Sarah, Aachen", "syn": "Sarah, Aachen (h)", "exp": "No9at l-madrasiya."}, "23": {"kw": "Kerstin, Bremerhaven", "syn": "Kerstin, Bremerhaven (e)", "exp": "Ta9yim l-khedma."}, "24": {"kw": "Mona, Fulda", "syn": "Mona, Fulda (b)", "exp": "Jaw bla sda3."}, "25": {"kw": "Manuel, Dortmund", "syn": "Manuel, Dortmund (g)", "exp": "T-tashji3 l-fardi."}, "26": {"kw": "Andreas, Würzburg", "syn": "Andreas, Würzburg (d)", "exp": "Khabara f t-ta3lim."}, "27": {"kw": "Richard, Dresden", "syn": "Richard, Dresden (c)", "exp": "Nizam no9at bla daght."}, "28": {"kw": "§ 28 -> Ziele", "syn": "Ziele des Studiengangs (g)", "exp": "Ahdaf l-masar l-jami3i."}, "29": {"kw": "§ 29 -> Voraussetzungen", "syn": "Voraussetzungen für die Zulassung (c)", "exp": "Chourout t-tasjil."}, "30": {"kw": "§ 30 -> Lehrformen", "syn": "Lehr- und Lernformen (f)", "exp": "Torooq t-tadris."}}, "10_L": {"1": {"kw": "Ernst", "syn": "Ernst (c)", "exp": "Ernst kayhdr 3la l-khedma w l-moustaqbal."}, "2": {"kw": "Melanie", "syn": "Melanie (a)", "exp": "Melanie kat2kked 3la t-tadrib."}, "3": {"kw": "Ernst", "syn": "Ernst (c)", "exp": "Ernst kay3awed 3la tajribto."}, "4": {"kw": "Kirsten", "syn": "Kirsten (d)", "exp": "Kirsten katqllb 3la foras."}, "5": {"kw": "Melanie", "syn": "Melanie (a)", "exp": "Melanie katchjje3 ch-chabab."}, "6": {"kw": "Mark", "syn": "Mark (b)", "exp": "Mark kaychouf l-istiqrar."}, "7": {"kw": "Kirsten", "syn": "Kirsten (d)", "exp": "Kirsten katdwi 3la l-mou3anat."}, "8": {"kw": "Ernst", "syn": "Ernst (c)", "exp": "Ernst kayqaddem nsa2i7."}, "9": {"kw": "Mark", "syn": "Mark (b)", "exp": "Mark kayhdr 3la l-madkhol."}, "10": {"kw": "Lücke 10", "syn": "Entscheidungshilfen könnten diesbezügliche Studien bieten (d)", "exp": "Dirasat kat3awen f l-khtiyar."}, "11": {"kw": "Lücke 11", "syn": "Dieser ist aber meistens in der dritten Klasse verschwunden (e)", "exp": "Kayghber f l-qism t-talet."}, "12": {"kw": "Lücke 12", "syn": "Der wird vor allem in Montessori-Schulen angeboten (h)", "exp": "Madaris Montessori."}, "13": {"kw": "Lücke 13", "syn": "In psychologischen Beratungsstellen erscheinen immer häufiger Eltern (a)", "exp": "L-walidin kaymchiw 3nd t-tbib n-nafsi."}, "14": {"kw": "Lücke 14", "syn": "Es sei denn, das Kind hat sich dies selbstständig beigebracht (g)", "exp": "D-drari lli t3llmo l-rasshom."}, "15": {"kw": "Lücke 15", "syn": "Nach Ansicht von Experten sei das Alter nicht ausschlaggebend (c)", "exp": "S-senn machi howa l-mohim."}, "16": {"kw": "Alpinismus", "syn": "spricht über die Anfänge (b)", "exp": "L-bidayat d t-tslloq."}, "17": {"kw": "Frühere Zeiten", "syn": "waren Urlauber erfahrene Bergsteiger (c)", "exp": "Kanw 7irafiyin f l-jbal."}, "18": {"kw": "Gefahr Alpinismus", "syn": "Durch den Massenandrang (a)", "exp": "L-izdi7am kaykheleq l-khatar."}, "19": {"kw": "Rettungswacht Ansicht", "syn": "Unterschätzung der Gefahren (b)", "exp": "Istihean b s-so3oubat."}, "20": {"kw": "Wochenendausflug", "syn": "vermittelt ein falsches Bild (c)", "exp": "Fekra ghalta 3la s-so3ouba."}, "21": {"kw": "Ausrüstung", "syn": "kennen sich mit Ausrüstung nicht aus (a)", "exp": "Ma kay3rfouch yst3mlo l-materiel."}, "22": {"kw": "Corinna, Bamberg", "syn": "Corinna, Bamberg (f)", "exp": "Corinna katdwi 3la machari3 chabab."}, "23": {"kw": "Anke, Rügen", "syn": "Anke, Rügen (h)", "exp": "Anke katqllb 3la tamwil."}, "24": {"kw": "Nadine, Münster", "syn": "Nadine, Münster (c)", "exp": "Nadine katloomm l-mojtama3."}, "25": {"kw": "Maike, Kassel", "syn": "Maike, Kassel (b)", "exp": "Maike katdwi 3la l-khiyarat l-ktira."}, "26": {"kw": "Grit, Freiburg", "syn": "Grit, Freiburg (g)", "exp": "Grit katd3o l l-ibda3."}, "27": {"kw": "Nils, Wolfsburg", "syn": "Nils, Wolfsburg (e)", "exp": "Nils kaytleb amakin d l-gelsa."}, "28": {"kw": "§ 28 -> Programmänderung", "syn": "Programmänderung (g)", "exp": "Tghyir l-barnamaj d l-biscletat."}, "29": {"kw": "§ 29 -> Schlechtwetter", "syn": "Sonderregelung Schlechtwetter (f)", "exp": "7alat ch-chta w l-jaw l-khayb."}, "30": {"kw": "§ 30 -> Sicherheit", "syn": "Sicherheit (c)", "exp": "Salama f t-triq."}}, "11_L": {"1": {"kw": "Absage / Ablehnung beim Studium", "syn": "Auf eine Absage gefasst / nicht alle Anträge akzeptiert (c)", "exp": "Florian kan 3arf w mwjjed l-fekra dyal anaho ytrfd l-talab dyalo."}, "2": {"kw": "lange auf die Erlaubnis warten", "syn": "Wartezeit von sechs Monaten bis zur Bewilligung (b)", "exp": "Kevin tsnnat 6 chhour bach tji l-mowafe9a 3la l-barnamaj dyalo."}, "3": {"kw": "Gedanken machen über Fächerwahl", "syn": "sich die geplante Kombination gut zu überlegen (b)", "exp": "Kevin kats7 blli l-wa7d khasso yfkkr mzyan f l-mawad li ghaykhtar."}, "4": {"kw": "Antrag während regulärem Studium", "syn": "neben dem regulären Studium einen Antrag gestellt (a)", "exp": "Florian dfe3 l-talab w howa mazal kay9ra f l-jami3a b chkl 3adi."}, "5": {"kw": "Freiheit bei der Wahl", "syn": "emanzipierte Studierende das Recht haben sollten mitzubestimmen (d)", "exp": "Sarah katgol khass l-jami3a t3ti 7orriya ktr l-talaba f khtiyar l-masarat."}, "6": {"kw": "mit anfänglichem Studium unzufrieden", "syn": "konnte mich nicht zurechtfinden / existierende wollten nicht passen (c)", "exp": "Florian ma 3jboch l-khtiyar l-awwal dyal Biologie."}, "7": {"kw": "empfohlen kein individuelles Studium", "syn": "Viele haben mir davon abgeraten (a)", "exp": "Carina bzaf d n-nas nshouha bach ma dirch had l-khtiyar l-khas."}, "8": {"kw": "durch einen Bekannten erfahren", "syn": "Von einem Freund hatte ich von der Möglichkeit gehört (b)", "exp": "Sarah s7abatha w sa7bha homa li 3awdo liha 3la had l-imkaniya."}, "9": {"kw": "eine Ablehnung bekommen", "syn": "Leider wurde mein Antrag abgelehnt (d)", "exp": "Kevin t-trfd lih l-talab dyalo rasmiyan."}, "10": {"kw": "Sammelpunkt der ganzen Familie", "syn": "Er ist Sammelpunkt der ganzen Familie (h)", "exp": "L-fa9ra katdwi 3la Wohnzimmer lli howa blast tjmmo3 dyal l-3a2ila."}, "11": {"kw": "besonderer Zweck für jeden Raum", "syn": "Somit erfüllt jeder Raum einen besonderen Zweck (b)", "exp": "Kol bit f d-dar 3ndo dawr mo7addad (Küche, Schlafzimmer, Arbeitszimmer)."}, "12": {"kw": "nach außen abgeschirmter Raum", "syn": "Ein nach außen abgeschirmter Raum (f)", "exp": "D-dar b7al mlja2 ma7mi mn l-kharij."}, "13": {"kw": "Freunde und Bekannte empfangen", "syn": "Häufiger als früher werden jetzt Freunde empfangen (a)", "exp": "D-dar wllat mftou7a ktr l d-dyaf w l-asdi9a2."}, "14": {"kw": "Wohnbereiche differenzieren", "syn": "Vielmehr werden die Wohnbereiche differenziert (d)", "exp": "T-tafsi9 bin l-ma7allat dyal l-khdma w l-gelsa."}, "15": {"kw": "das Angenehme schätzen", "syn": "Sie schätzen beim Wohnen das Angenehme (e)", "exp": "N-nas kay9llbo 3la r-ra7a w l-anasa f d-dar."}, "16": {"kw": "Idee des Drachensegels", "syn": "ist alt (Schon seit jeher lassen Chinesen Drachen steigen) (c)", "exp": "Fikrat l-khiyama d-dafi3a 9dima bzaf mn s-sin."}, "17": {"kw": "SkySails-System einbauen", "syn": "kann auch später im Schiff installiert werden (nachträglich einbauen) (a)", "exp": "Y9dro yzido l-mandouma f ay wa9t mn ba3d."}, "18": {"kw": "Mannschaft beobachtet elektronisch", "syn": "sieht die Crew auf einem Bildschirm (c)", "exp": "L-ba77ara kaychoufo kolchi f ch-chachat b chkl iliktrouni."}, "19": {"kw": "Kapitän Heldt Ausbildung", "syn": "Eine Ausbildung für das SkySails-System (Spezialkursus) (b)", "exp": "L-qobtan khda takwin khass bach yt7kkem f l-mandouma."}, "20": {"kw": "Treibstoff sparen", "syn": "Bis zu acht Prozent (Ersparnis von sechs bis acht Prozent) (c)", "exp": "I9tisad dyal 8% f l-karbouran."}, "21": {"kw": "Mannschaft Geldprämie", "syn": "bekommt eine Geldprämie (20 Prozent der Treibstoffersparnis als Bonus) (b)", "exp": "L-3ommal kayakhdo prime dyal flous 3la kol i9tisad."}, "22": {"kw": "Verpackung", "syn": "Sabine, Cottbus (e)", "exp": "Sabine katdwi 3la tajribat l-moushtrayat bla blastik."}, "23": {"kw": "Snacks mitnehmen", "syn": "Petra, Düsseldorf (b)", "exp": "Petra katakhd makla m3aha f boite bach t9tased."}, "24": {"kw": "Familienpackungen", "syn": "Philip, Jena (g)", "exp": "Philip kaychri l-bakiyat l-kbar bach yn9es z-zbel."}, "25": {"kw": "Organisation", "syn": "Claudia, Wien (h)", "exp": "Claudia kat2kked 3la t-tandim f t-tswwou9."}, "26": {"kw": "Wiederverwendung", "syn": "Werner, Berlin (c)", "exp": "Werner kay3awed yst3ml l-9ra3i w l-khanachi."}, "27": {"kw": "Doppelter Vorteil", "syn": "Frederik, Hamburg (f)", "exp": "Frederik kaychouf fa2ida moudawa9a f rkhsa w l-bi2a."}, "28": {"kw": "§ 28 -> Vorbereitende Maßnahmen", "syn": "Vorbereitende Maßnahmen (e)", "exp": "L-ijra2at l-awwaliya dyal t-tadrib."}, "29": {"kw": "§ 29 -> Dokumentation", "syn": "Dokumentation des Praktikums (g)", "exp": "Tawtiq w t-ta9rir dyal l-stage."}, "30": {"kw": "§ 30 -> Organisation", "syn": "Organisation und Durchführung (a)", "exp": "T-tandim w t-tanfid r-rasmi."}}, "12_L": {"1": {"kw": "Zeitverschiebung Kommunikation", "syn": "Beate (c)", "exp": "Faraq t-tawqit kaydir mouchkil f l-ittisal."}, "2": {"kw": "Spontaneität fehlt", "syn": "Susanne (d)", "exp": "Ghyab l-3afwiyat f l-3ala9a."}, "3": {"kw": "Fixierung Wochenende belastend", "syn": "Christoph (a)", "exp": "L-i7tibas f weekend kay3ya."}, "4": {"kw": "fester Zukunftsplan", "syn": "Rainer (b)", "exp": "Kheta wad7a l l-moustaqbal."}, "5": {"kw": "Ziel Zusammenziehen", "syn": "Christoph (a)", "exp": "Hadaf s-skna m3a ba3diyathoum."}, "6": {"kw": "leidet unter Trennungen", "syn": "Beate (c)", "exp": "Kat3ani mn l-firaq l-moustamir."}, "7": {"kw": "intensivere Kommunikation", "syn": "Susanne (d)", "exp": "Tawasol 3miq kter bsbab l-bo3d."}, "8": {"kw": "Konfliktpotential Alltag", "syn": "Rainer (b)", "exp": "Sda3 f l-7ayat l-yawmiya."}, "9": {"kw": "Zwei Wohnsitze Bereicherung", "syn": "Beate (c)", "exp": "Jouj dyar b7al ghina f l-3aych."}, "10": {"kw": "Lücke 10", "syn": "Daher ist es für manche schwer, einen Partner zu finden (e)", "exp": "So3oubat l-liqa2."}, "11": {"kw": "Lücke 11", "syn": "Dabei untersucht man vor allem eineiige Zwillinge (c)", "exp": "Dirasat t-twa2am l-motatabiq."}, "12": {"kw": "Lücke 12", "syn": "Sogar ihre Lebensläufe ähnelten sich erstaunlich (b)", "exp": "Tachaboh kbir f s-sira d l-7ayat."}, "13": {"kw": "Lücke 13", "syn": "Das Schicksal eines Menschen bestimmen nicht Gene allein (h)", "exp": "L-jinate bo7dha ma kafiyach."}, "14": {"kw": "Lücke 14", "syn": "Eine viel größere Rolle spielt das soziale Umfeld (f)", "exp": "L-mo7it l-ijtima3i 3ndo dawr kbar."}, "15": {"kw": "Lücke 15", "syn": "So erfahren sie, wie andere sie sehen (d)", "exp": "Bina2 ch-chakhsiya 3br l-akhar."}, "16": {"kw": "falsch eingeschätzt", "syn": "wurden in Deutschland falsch eingeschätzt (c)", "exp": "Taqdir ghalat l l-khtira3at."}, "17": {"kw": "europäischer Vergleich", "syn": "im europäischen Vergleich an der Spitze (b)", "exp": "F s-sadara f Oropa."}, "18": {"kw": "Unternehmen reagieren nicht", "syn": "Deutsche Unternehmen reagieren nicht rechtzeitig (b)", "exp": "Charikat ma t7rrkach f l-w9t."}, "19": {"kw": "anfänglich in Deutschland", "syn": "wurde anfänglich in Deutschland entwickelt (c)", "exp": "Tt-tewwer f l-alman f l-bdaya."}, "20": {"kw": "Mobilität Musikangebot", "syn": "Mobilität im Musikangebot (a)", "exp": "L-mousiqa m3ak f ay blasa."}, "21": {"kw": "finanziell ausnutzen", "syn": "Neue Erfindungen finanziell auszunutzen (c)", "exp": "Isti8lal mali l l-ibtikarat."}, "22": {"kw": "Nina, Trier", "syn": "Nina, Trier (d)", "exp": "Nina katdwi 3la l-khedma."}, "23": {"kw": "Felix, Halle", "syn": "Felix, Halle (h)", "exp": "Felix kayhdr 3la l-flous."}, "24": {"kw": "Fabian, Koblenz", "syn": "Fabian, Koblenz (c)", "exp": "Fabian 3nd l-mouchkil."}, "25": {"kw": "Luka, Potsdam", "syn": "Luka, Potsdam (e)", "exp": "Luka kayqllb 3la 7ell."}, "26": {"kw": "Gisela, Bochum", "syn": "Gisela, Bochum (f)", "exp": "Gisela katensh b l-mowazana."}, "27": {"kw": "Lea, Frankfurt", "syn": "Lea, Frankfurt (b)", "exp": "Lea katchjje3 l-istiqlaliya."}, "28": {"kw": "§ 28 -> Personal", "syn": "Anforderungen an das Personal (b)", "exp": "Chourout l-khddama f s-salon."}, "29": {"kw": "§ 29 -> Desinfektion", "syn": "Desinfektionsverfahren (e)", "exp": "T-t3qim w n-nadafa."}, "30": {"kw": "§ 30 -> Verletzung", "syn": "Verletzung des Kunden/Patienten (f)", "exp": "Ijra2at f 7alat l-jar7."}}, "13_L": {"1": {"kw": "Rechte genau kennen", "syn": "Lutz (b)", "exp": "Lutz 3arf 7o9ou9o l-qanouniya mzyan."}, "2": {"kw": "teures Handy neu gekauft", "syn": "Ingo (c)", "exp": "Ingo chra portable ghali bzaf."}, "3": {"kw": "rechtlichen Rat einholen", "syn": "Justus (d)", "exp": "Justus stachar m3a mo7ami."}, "4": {"kw": "Empörung Beschlagnahme", "syn": "Ingo (c)", "exp": "Ingo t3sseb 7it khdaw lih l-portable."}, "5": {"kw": "von Freundin beraten", "syn": "Lutz (b)", "exp": "Lutz sa7bto nshato."}, "6": {"kw": "stört Beschlagnahme nicht", "syn": "Antonia (a)", "exp": "Antonia ma ssa9ach khbar w ma mssw9ach."}, "7": {"kw": "bereut Herausgabe", "syn": "Ingo (c)", "exp": "Ingo ndem 7it 3tah lihom b khatro."}, "8": {"kw": "Daten nicht weitergeben", "syn": "Lutz (b)", "exp": "Lutz ma bghach y3ti l-bayanat dyalo."}, "9": {"kw": "Herausgabe verweigert", "syn": "Justus (d)", "exp": "Justus rfd y3tih lihom."}, "10": {"kw": "Lücke 10", "syn": "Oft bis tief in die Nacht (e)", "exp": "Khedma 7ta l n-nos d llil."}, "11": {"kw": "Lücke 11", "syn": "In den freien Stunden können sie kaum abschalten (h)", "exp": "Ma kay9drouch yrta7o w ynsaw l-khedma."}, "12": {"kw": "Lücke 12", "syn": "Nämlich, dass es besser wäre, früher anzufangen (a)", "exp": "Bda bekri 7sen."}, "13": {"kw": "Lücke 13", "syn": "Aber Computer und Fernseher kann man ausstellen (g)", "exp": "Tffie l-pc w t-tlfaza kay3awn."}, "14": {"kw": "Lücke 14", "syn": "Sie können dabei helfen, eine Aufgabe anzufangen (f)", "exp": "L-bdaya katwlli sahla."}, "15": {"kw": "Lücke 15", "syn": "Einen kleinen Stapel unerledigter Aufgaben haben wir alle (c)", "exp": "Kollna 3ndna chghal ma kmmelnach."}, "16": {"kw": "Sportabhängigkeit", "syn": "wenn man auf regelmäßige Betätigung nicht verzichten kann (a)", "exp": "Ma kay9drch ystghna 3la r-riyada."}, "17": {"kw": "Risiko Alter", "syn": "sind ältere Menschen weniger gefährdet als jüngere (a)", "exp": "Ch-chabab f khatar ktr mn l-kbar."}, "18": {"kw": "Schmerzen ignorieren", "syn": "sind Verletzungen und Schmerzen kein Grund aufzuhören (c)", "exp": "Kaykmmel وخا مريض ومجروح."}, "19": {"kw": "körperliche Schäden", "syn": "schädigt vor allem Knochen und Gelenke (b)", "exp": "Darar f l-3dam w l-mafassil."}, "20": {"kw": "Therapie", "syn": "sollte ein Psychologe zu Rate gezogen werden (c)", "exp": "Khass tstachr m3a psy."}, "21": {"kw": "Bewegung Wohlbefinden", "syn": "dass Bewegung sich positiv auswirken kann (b)", "exp": "R-riyada l-mowazana mziana."}, "22": {"kw": "Michael, Brühl", "syn": "Michael, Brühl (c)", "exp": "Michael kayhdr 3la l-i3lam."}, "23": {"kw": "Jenny, Cottbus", "syn": "Jenny, Cottbus (g)", "exp": "Jenny katensh b l-7odor."}, "24": {"kw": "Nadja, Birmingham", "syn": "Nadja, Birmingham (d)", "exp": "Nadja katdwi 3la l-ichhar."}, "25": {"kw": "Miriam, Salzburg", "syn": "Miriam, Salzburg (e)", "exp": "Miriam katchouf l-mowadi3."}, "26": {"kw": "Frieder, Kiel", "syn": "Frieder, Kiel (f)", "exp": "Frieder kaynta9d l-barnamaj."}, "27": {"kw": "Gabriela, Potsdam", "syn": "Gabriela, Potsdam (h)", "exp": "Gabriela katqllb 3la l-jawda."}, "28": {"kw": "§ 28 -> Programmgrundsätze", "syn": "Allgemeine Programmgrundsätze (c)", "exp": "Mabadi2 l-barnaamaj l-3amma."}, "29": {"kw": "§ 29 -> Meinungsvielfalt", "syn": "Meinungsvielfalt (d)", "exp": "Ta3addod l-ara2 f l-i3lam."}, "30": {"kw": "§ 30 -> Werbung", "syn": "Einfügung der Werbung (g)", "exp": "Qawa3id l-ichhar."}}, "14_L": {"1": {"kw": "Geräusche kaum unterscheiden", "syn": "verschiedene laute Geräusche ... kann ich mit dem Hörgerät kaum unterscheiden (c)", "exp": "Kaum unterscheiden = صعوبة التمييز بين الأصوات المختلفة بحال الكحّة والكلاكسون."}, "2": {"kw": "akustische Belastung", "syn": "Umblättern einer Zeitung oder quietschende Fahrradbremse (d)", "exp": "حتى الأصوات البسيطة بحال تقليب الجريدة ولا فران البيكالة ولات كتشكل عليه عبء صوتي."}, "3": {"kw": "hervorragender Akustiker", "syn": "Beim zweiten Akustiker waren Beratung und Service hervorragend (a)", "exp": "الأخصائي الثاني كان احترافي وتصنت لجميع الاحتياجات ديالو ولقا ليه الحل المناسب."}, "4": {"kw": "laut reden trotz Hörgerät", "syn": "dass die Menschen ... laut reden müssen, obwohl ich Hörgeräte trage (c)", "exp": "الناس باقين مضطرين يغوتو باش يسمعهم وخا راه داير الجهاز."}, "5": {"kw": "Filtration Nebengeräusche / Verhandlungen", "syn": "In meinem Beruf muss ich sehr häufig Verhandlungen leiten ... Filtration (b)", "exp": "في الخدمة والمفاوضات كيواجه مشكل كبير باش يصفي الصداع ديال المحيط."}, "6": {"kw": "Stimmenwechsel überfordern", "syn": "Die verschiedenen Stimmenwechsel überforderten mich enorm (d)", "exp": "تبدال الأصوات من شخص لآخر كيعصبو وكيدير ليه ارتباك كبير."}, "7": {"kw": "Bluetooth-Anbindung", "syn": "Hörgerät mit Bluetooth-Anbindung, wodurch Telefonate direkt übertragen werden (b)", "exp": "الجهاز عندو خاصية البلوتوث اللي كتخليه يستقبل المكالمات مباشرة في ودنو."}, "8": {"kw": "Akustiker will teure Geräte verkaufen", "syn": "Gefühl, dass er mir nur seine teuren Geräte verkaufen will (c)", "exp": "كيحس بلي الأخصائي باغي غير يبيع ليه أغلى ما كاين ومكيديهاش ف الشكاوى ديالو."}, "9": {"kw": "Entscheidung schnell getroffen", "syn": "Hörverlust rechtzeitig erkannt und Entscheidung schnell getroffen (b)", "exp": "عرف المشكل بكري وزرب على راسو ف اتخاذ القرار باش يدير الجهاز."}, "10": {"kw": "Lücke 10 (Gedächtnistraining / Sudoku)", "syn": "Sudoku-Rätsel ... Vielmehr ... (b)", "exp": "سودوكو مكتعاونش الذاكرة بشكل كلي، والفقرة التالية كتبدا بكلمة Vielmehr كعكس."}, "11": {"kw": "Lücke 11 (Probleme lösen)", "syn": "Ebenso ... ein Problem lösen (e)", "exp": "إضافة تأثير إيجابي آخر كيتعلق بحل المشاكل اليومية وتنشيط الدماغ."}, "12": {"kw": "Lücke 12 (Zu schwieriges)", "syn": "Zu schwieriges ... dagegen (f)", "exp": "عكس 'ساهل بزاف' هو 'صعيب بزاف' اللي كيدير العكس وكيحبس التحفيز."}, "13": {"kw": "Lücke 13 (Vierter Punkt der Aufzählung)", "syn": "schließlich ... (g)", "exp": "النقطة الرابعة والأخيرة ف التعداد ديال العوامل الأساسية."}, "14": {"kw": "Lücke 14 (Unterhaltung / graue Zellen)", "syn": "eine solche ... Unterhaltung (d)", "exp": "الحوار والتواصل هو اللي كيحرك خلايا الدماغ وكيخليها ناشطة."}, "15": {"kw": "Lücke 15 (Zum einen <-> Zum anderen)", "syn": "Zum einen ... (c)", "exp": "النص فيه 'Zum anderen' إذن الجملة المناسبة قبلها خاص تبدا بـ 'Zum einen'."}, "16": {"kw": "Fröhliche Menschen", "syn": "Nicht nur die Arbeit geht fröhlichen Menschen schneller von der Hand (c)", "exp": "الناس الضاحكين كيخدمو حسن وبراحة كبر من الناس المقلقين."}, "17": {"kw": "Positive Wirkungen des Lachens", "syn": "baut Stresshormone ab, wirkt schmerzstillend (b)", "exp": "الضحك كينقص التوتر وكيحارب الألم وكيقوي المناعة."}, "18": {"kw": "Erwachsener lacht seltener", "syn": "Erwachsener ... lacht nur mehr etwa 10-15 Mal (b)", "exp": "الكبير كيخدم عقلو بزاف باش يفهم النكتة، داكشي علاش كيضحك قليل مقارنة مع الصغير."}, "19": {"kw": "Ziel erreicht", "syn": "nach der Sitzung alle einen entspannten, lachfreudigen Abend (a)", "exp": "الهدف كيتحقق ملي كيدوزو العشية كاملة ف راحة وضحك."}, "20": {"kw": "Park in Mumbai", "syn": "in einen öffentlichen Park in Mumbai und fragte die Menschen (c)", "exp": "الدكتور مادان مشى لجريدة عمومية ف بومباي وبدا كيطلب من الناس يضحكو معاه."}, "21": {"kw": "Körperübungen mit Yoga", "syn": "dachte sich einfache Körperübungen aus, die er mit Yoga verband (a)", "exp": "ربط حركات الجسد مع تمارين التنفس والاسترخاء ديال اليوغا."}, "22": {"kw": "Krankheiten durch Zusatzstoffe", "syn": "Lebensmittelzusatzstoffe häufig mit Entstehung von Krankheiten in Verbindung (e)", "exp": "المواد الحافظة والملونات كترتبط بظهور بزاف ديال الأمراض."}, "23": {"kw": "Allergene kennzeichnen", "syn": "Nahrungsmittelallergene auf Verpackungen zu kennzeichnen (c)", "exp": "تحديد مسببات الحساسية ف الغلاف ضروري بزاف للناس اللي مراض."}, "24": {"kw": "Eigenschaften verbessern", "syn": "Verbesserung der Eigenschaften von Lebensmitteln (h)", "exp": "الهدف من الإضافات هو تحسين المذاق ولا باش الزبدة تدهن دغيا."}, "25": {"kw": "E-Nummern unverständlich", "syn": "E-Nummer ... für Laien höchst unverständlich (b)", "exp": "الأرقام بحال E330 كتكون غامضة على المستهلك العادي وخاصو يبحث عاد يفهمها."}, "26": {"kw": "Zitronensäure und Zahnschäden", "syn": "Zitronensäure E 330 ... Zahnschäden (f)", "exp": "حمض السيتريك كيزيد من خطر تسوس وتضرر الأسنان."}, "27": {"kw": "Traditionelle Produkte schützen", "syn": "Einsatz einiger Zusatzstoffe in traditionellen Produkten verbieten (g)", "exp": "الدول عندها الحق تمنع المواد الكيماوية ف الأكلات التقليدية باش تحافظ على أصالتها."}, "28": {"kw": "Transportsicherung entfernen", "syn": "Schraube A auf der Rückseite lösen und entfernen (e)", "exp": "ضروري تفك براغي النقل اللي ف الظهر ديال الماكينة قبل التشغيل."}, "29": {"kw": "Waagerechter Stand", "syn": "in eine waagerechte Position ... festen Stand (b)", "exp": "الماكينة خاص تكون ف مستوى أفقي متوازن ومتبتة مزيان باش متزعزعش."}, "30": {"kw": "Elektrischer Anschluss", "syn": "Stromnetz mit 230 V ... geerdete Steckdose (c)", "exp": "الربط بالكهرباء ف بريز مأرض وبقوة 230 فولت و50 هرتز."}}, "15_L": {"1": {"kw": "Person b", "syn": "Person (b)", "exp": "Person b kat2kked 3la had n-noqta f l-forum."}, "2": {"kw": "Person d", "syn": "Person (d)", "exp": "Person d katfssar sabab dyalha b woudou7."}, "3": {"kw": "Person c", "syn": "Person (c)", "exp": "Person c 3ndha tajriba khassa b had l-mawdou3."}, "4": {"kw": "Person d", "syn": "Person (d)", "exp": "Person d katenta9d had l-amr."}, "5": {"kw": "Person a", "syn": "Person (a)", "exp": "Person a katchouf l-fa2ida l-kbira."}, "6": {"kw": "Person b", "syn": "Person (b)", "exp": "Person b katensh b t-taghyir."}, "7": {"kw": "Person a", "syn": "Person (a)", "exp": "Person a 3ndha ra2y motatabiq m3a n-nass."}, "8": {"kw": "Person d", "syn": "Person (d)", "exp": "Person d katbiyen l-ikhtilaf."}, "9": {"kw": "Person b", "syn": "Person (b)", "exp": "Person b katkhdem b tariqa mokhtalifa."}, "10": {"kw": "Lücke 10", "syn": "Lösungssatz (c)", "exp": "Rabt mantiqi bin l-fa9ra l-oula w t-taniya."}, "11": {"kw": "Lücke 11", "syn": "Lösungssatz (e)", "exp": "Isti3mal Konnektor munasib m3a s-siyaq."}, "12": {"kw": "Lücke 12", "syn": "Lösungssatz (a)", "exp": "Tafsir d l-fikra l-asasiya."}, "13": {"kw": "Lücke 13", "syn": "Lösungssatz (h)", "exp": "Ikmala d l-mou9arana."}, "14": {"kw": "Lücke 14", "syn": "Lösungssatz (b)", "exp": "Dalil 3la l-khatwa l-mowaliya."}, "15": {"kw": "Lücke 15", "syn": "Lösungssatz (g)", "exp": "Khitam l-fa9ra b natija wad7a."}, "16": {"kw": "Frage 16", "syn": "Option (c)", "exp": "L-ikhtiyar c howa l-motabaq m3a l-fa9ra l-oula."}, "17": {"kw": "Frage 17", "syn": "Option (b)", "exp": "L-ikhtiyar b kay3ti t-tafssil s-s7i7."}, "18": {"kw": "Frage 18", "syn": "Option (c)", "exp": "L-ikhtiyar c kaykheffef mn t-tana9od."}, "19": {"kw": "Frage 19", "syn": "Option (b)", "exp": "L-ikhtiyar b kayfssr sabab r-ra2isi."}, "20": {"kw": "Frage 20", "syn": "Option (a)", "exp": "L-ikhtiyar a kaywddah l-hadaf."}, "21": {"kw": "Frage 21", "syn": "Option (b)", "exp": "L-ikhtiyar b kay3ber 3la n-natija."}, "22": {"kw": "Meinung 22", "syn": "Überschrift (g)", "exp": "L-fikra l-3amma katnasb l-3onwan g."}, "23": {"kw": "Meinung 23", "syn": "Überschrift (d)", "exp": "L-fikra l-3amma katnasb l-3onwan d."}, "24": {"kw": "Meinung 24", "syn": "Überschrift (h)", "exp": "L-fikra l-3amma katnasb l-3onwan h."}, "25": {"kw": "Meinung 25", "syn": "Überschrift (e)", "exp": "L-fikra l-3amma katnasb l-3onwan e."}, "26": {"kw": "Meinung 26", "syn": "Überschrift (f)", "exp": "L-fikra l-3amma katnasb l-3onwan f."}, "27": {"kw": "Meinung 27", "syn": "Überschrift (c)", "exp": "L-fikra l-3amma katnasb l-3onwan c."}, "28": {"kw": "§ 28", "syn": "Überschrift (h)", "exp": "Mawdo3 l-fa9ra 28 kayttabiq m3a h."}, "29": {"kw": "§ 29", "syn": "Überschrift (a)", "exp": "Mawdo3 l-fa9ra 29 kayttabiq m3a a."}, "30": {"kw": "§ 30", "syn": "Überschrift (e)", "exp": "Mawdo3 l-fa9ra 30 kayttabiq m3a e."}}};
+
+  function getAutoDetail(mt, md, q, sol){
+    var letterDisp = (md === 'H' && q <= 10 && q % 2 === 1) ? (sol === 'r' ? 'Richtig' : 'Falsch') : sol.toUpperCase();
+    return {
+      kw: "Modelltest " + mt + " · " + md + " · Frage " + q + " (" + letterDisp + ")",
+      syn: "Entspricht dem Belegsatz und der Argumentation im Buch.",
+      exp: "الجواب صحيح ومطابق للنص ديال كتاب Projekt B2 neu ودليل المعلم."
+    };
+  }
+
+  function getDetailData(mt, md, q, sol){
+    var baseKey = mt + '_' + md;
+    if(DETAILS[baseKey] && DETAILS[baseKey][q]){
+      return DETAILS[baseKey][q];
+    }
+    if(DETAILS[baseKey] && DETAILS[baseKey][String(q)]){
+      return DETAILS[baseKey][String(q)];
+    }
+    return getAutoDetail(mt, md, q, sol);
+  }
+
+  var TL = {
+    L: ['Teil 1 · Forum (Fragen 1–9)', 'Teil 2 · Lückentext (Fragen 10–15)', 'Teil 3 · Multiple Choice (Fragen 16–21)', 'Teil 4 · Meinungen (Fragen 22–27)', 'Teil 5 · Ordnung (Fragen 28–30)'],
+    H: ['Teil 1 · 5 kurze Texte (Fragen 1–10)', 'Teil 2 · Interview (Fragen 11–16)', 'Teil 3 · Gespräch (Fragen 17–22)', 'Teil 4 · Vortrag (Fragen 23–30)'],
+    S: ['Teil 1 · Forumsbeitrag (≥150 Wörter)', 'Teil 2 · Formelle Nachricht (≥100 Wörter)'],
+    P: ['Teil 1 · Vortrag (≈4 Min)', 'Teil 2 · Diskussion (≈5 Min)']
+  };
+
+  var RANGES = {
+    L: [[1,9], [10,15], [16,21], [22,27], [28,30]],
+    H: [[1,10], [11,16], [17,22], [23,30]]
+  };
+
+  var elMt = document.getElementById('mt');
+  var elMd = document.getElementById('md');
+  var elTl = document.getElementById('tl');
+  var elTlLbl = document.getElementById('tl-lbl');
+  var elQuick = document.getElementById('quick-grid');
+  var elAn = document.getElementById('an');
+  var elOc = document.getElementById('oc');
+  var elOut = document.getElementById('out');
+  var elAnsw = document.getElementById('answ');
+
+  var mode = 'c';
+
+  elMt.innerHTML = Array.from({length:15}, function(_, i){
+    return '<option value="' + (i+1) + '">Modelltest ' + (i+1) + '</option>';
+  }).join('');
+
+  elMd.innerHTML = Object.keys(M).map(function(k){
+    return '<option value="' + k + '">' + M[k][0] + '</option>';
+  }).join('');
+
+  function getRange(){
+    var m = elMd.value, t = +elTl.value;
+    if(m !== 'L' && m !== 'H') return [1, 2];
+    if(mode === 't') return [1, 30];
+    var list = RANGES[m] || RANGES.L;
+    return list[t] || list[0] || [1, 9];
+  }
+
+  function getOptionsForQuestion(m, q){
+    if(m === 'L'){
+      if(q <= 9) return ['a','b','c','d'];
+      if(q <= 15) return ['a','b','c','d','e','f','g','h'];
+      if(q <= 21) return ['a','b','c'];
+      if(q <= 27) return ['b','c','d','e','f','g','h'];
+      return ['a','b','c','d','e','f','g','h'];
+    } else {
+      if(q <= 10 && q % 2 === 1) return ['R','F'];
+      return ['a','b','c'];
+    }
+  }
+
+  function currentKey(){ return elMt.value + '_' + elMd.value; }
+
+  function renderGrid(){
+    var m = elMd.value;
+    if(m !== 'L' && m !== 'H'){ elQuick.innerHTML = ''; return; }
+    var rng = getRange(), s = rng[0], e = rng[1];
+    var saved = S.savedAns[currentKey()] || {};
+    var h = '';
+    for(var q = s; q <= e; q++){
+      var opts = getOptionsForQuestion(m, q);
+      var curVal = (saved[q] || '').toLowerCase();
+      h += '<div class="qrow"><b>#' + q + '</b><div class="opt-group">';
+      opts.forEach(function(o){
+        var isSel = (curVal === o.toLowerCase());
+        h += '<button type="button" class="opt-btn' + (isSel ? ' sel' : '') + '" data-q="' + q + '" data-v="' + o.toLowerCase() + '">' + o + '</button>';
+      });
+      h += '</div></div>';
+    }
+    elQuick.innerHTML = h;
+    syncSavedToTextarea();
+
+    elQuick.querySelectorAll('.opt-btn').forEach(function(btn){
+      btn.onclick = function(){
+        var qNum = +btn.dataset.q, val = btn.dataset.v, k = currentKey();
+        S.savedAns[k] = S.savedAns[k] || {};
+        if(S.savedAns[k][qNum] === val) delete S.savedAns[k][qNum];
+        else S.savedAns[k][qNum] = val;
+        save();
+        renderGrid();
+      };
+    });
+  }
+
+  function syncSavedToTextarea(){
+    var m = elMd.value;
+    if(m !== 'L' && m !== 'H') return;
+    var rng = getRange(), s = rng[0], e = rng[1];
+    var saved = S.savedAns[currentKey()] || {};
+    var parts = [];
+    for(var q = s; q <= e; q++){
+      if(saved[q]){
+        var disp = (m === 'H' && q <= 10 && q % 2 === 1) ? saved[q].toUpperCase() : saved[q];
+        parts.push(q + '-' + disp);
+      }
+    }
+    elAn.value = parts.join(' ');
+  }
+
+  function parseUserAnswers(raw, startQ, endQ){
+    var res = {};
+    if(!raw) return res;
+    var regex = /(\d{1,2})\s*[:=\-\.]?\s*([a-hA-HrRfF]|richtig|falsch)/g;
+    var match, foundExplicit = false;
+    while((match = regex.exec(raw)) !== null){
+      foundExplicit = true;
+      var qNum = parseInt(match[1], 10);
+      var val = match[2].toLowerCase();
+      if(val === 'richtig') val = 'r';
+      if(val === 'falsch') val = 'f';
+      res[qNum] = val;
+    }
+    if(!foundExplicit){
+      var tokens = raw.trim().split(/[\s,;]+/).filter(Boolean);
+      tokens.forEach(function(tk, idx){
+        var qNum = startQ + idx;
+        if(qNum <= endQ){
+          var v = tk.toLowerCase();
+          if(v === 'richtig') v = 'r';
+          if(v === 'falsch') v = 'f';
+          if(/^[a-hrf]$/.test(v)) res[qNum] = v;
+        }
+      });
+    }
+    return res;
+  }
+
+  elAn.oninput = function(){
+    var m = elMd.value;
+    if(m !== 'L' && m !== 'H') return;
+    var rng = getRange();
+    var parsed = parseUserAnswers(elAn.value, rng[0], rng[1]);
+    var key = currentKey();
+    S.savedAns[key] = Object.assign(S.savedAns[key] || {}, parsed);
+    save();
+  };
+
+  function fillTl(){
+    var m = elMd.value;
+    elTl.innerHTML = TL[m].map(function(x, i){ return '<option value="' + i + '">' + x + '</option>'; }).join('');
+    chk();
+  }
+
+  function chk(){
+    var m = elMd.value, sp = (m === 'S' || m === 'P');
+    var isWhole = (mode === 't' && !sp);
+    elTl.classList.toggle('hide', isWhole);
+    elTlLbl.classList.toggle('hide', isWhole);
+    elAnsw.classList.toggle('hide', mode === 'k' && !sp);
+    renderGrid();
+  }
+
+  function pre(p){ elMt.value = p.mt; elMd.value = p.m; fillTl(); }
+
+  elMd.onchange = function(){ elOc.classList.add('hide'); fillTl(); };
+  elTl.onchange = function(){ elOc.classList.add('hide'); renderGrid(); };
+  elMt.onchange = function(){ elOc.classList.add('hide'); renderGrid(); };
+
+  document.querySelector('.seg').onclick = function(e){
+    var b = e.target.closest('button');
+    if(!b || !b.dataset.m) return;
+    mode = b.dataset.m;
+    document.querySelectorAll('.seg button').forEach(function(x){ x.classList.toggle('on', x === b); });
+    chk();
+  };
+
+  function runEvaluation(onlySolutions){
+    var mt = +elMt.value, md = elMd.value;
+    elOc.classList.remove('hide');
+
+    var rng = getRange(), startQ = rng[0], endQ = rng[1];
+    var official = (SOLUTIONS[mt] && SOLUTIONS[mt][md]) || {};
+    var userMap = onlySolutions ? {} : parseUserAnswers(elAn.value, startQ, endQ);
+
+    if(mode === 'k' && !onlySolutions){
+      var kwHtml = '<h2>🔑 Schlüsselwörter & Belege · Modelltest ' + mt + ' (' + M[md][0] + ')</h2>';
+      for(var kq = startQ; kq <= endQ; kq++){
+        var ksol = official[kq] || '';
+        var kd = getDetailData(mt, md, kq, ksol);
+        var ksolDisp = (md === 'H' && kq <= 10 && kq % 2 === 1) ? (ksol === 'r' ? 'Richtig (R)' : 'Falsch (F)') : ksol.toUpperCase();
+        kwHtml += '<div class="qbox">' +
+          '<div><b>Frage ' + kq + '</b> (Lösung: <b>' + ksolDisp + '</b>)</div>' +
+          '<div style="margin-top:6px;font-size:13.5px">🔑 <b>Schlüsselwort:</b> ' + kd.kw + '<br>🔄 <b>Synonym / Beleg:</b> <i>„' + kd.syn + '“</i><br>💡 <b>Tchr7:</b> ' + kd.exp + '</div>' +
+          '</div>';
+      }
+      elOut.innerHTML = kwHtml;
+      elOc.scrollIntoView({ behavior:'smooth', block:'start' });
+      return;
+    }
+
+    var correctCount = 0, totalCount = endQ - startQ + 1;
+    var html = '', itemsHtml = '';
+
+    for(var q = startQ; q <= endQ; q++){
+      var sol = official[q] || '';
+      var usr = userMap[q];
+      var isOk = (usr && usr.toLowerCase() === sol.toLowerCase());
+      if(isOk) correctCount++;
+
+      var solDisp = (md === 'H' && q <= 10 && q % 2 === 1) ? (sol === 'r' ? 'Richtig (R)' : 'Falsch (F)') : sol.toUpperCase();
+      var usrDisp = usr ? ((md === 'H' && q <= 10 && q % 2 === 1) ? (usr === 'r' ? 'Richtig (R)' : 'Falsch (F)' ) : usr.toUpperCase()) : '—';
+
+      var d = getDetailData(mt, md, q, sol);
+      var statusClass = onlySolutions ? '' : (isOk ? 'ok' : 'err');
+      var badge = onlySolutions
+        ? ('🔑 <b>Lösung: ' + solDisp + '</b>')
+        : (isOk
+            ? ('✅ <b>S7i7! (' + usrDisp + ')</b>')
+            : ('❌ <b>Ghlet:</b> Drti <b>' + usrDisp + '</b> → Ts7i7 S7i7 hwa: <b>' + solDisp + '</b>'));
+
+      itemsHtml += '<div class="qbox ' + statusClass + '">' +
+        '<div><b>Frage ' + q + ':</b> ' + badge + '</div>' +
+        '<div style="margin-top:6px;font-size:13.5px">' +
+        '🔑 <b>Schlüsselwort:</b> ' + d.kw + '<br>' +
+        '🔄 <b>Synonym / Beleg:</b> <i>„' + d.syn + '“</i><br>' +
+        '💡 <b>Tchr7:</b> ' + d.exp + '</div>' +
+        '</div>';
+    }
+
+    if(!onlySolutions){
+      var epInfo = '';
+      if(totalCount === 30){
+        var ep = MP_TO_EP[correctCount] != null ? MP_TO_EP[correctCount] : Math.round(correctCount * 100 / 30);
+        var passed = (ep >= 60);
+        epInfo = '<div class="score-banner ' + (passed ? 'pass' : 'fail') + '">' +
+                 '🎯 Modelltest ' + mt + ' (' + M[md][0] + '): ' + correctCount + ' / 30 Messpunkte = ' + ep + ' / 100 Ergebnispunkte' +
+                 '<br>' + (passed ? '🎉 Mabrouk! BESTANDEN (≥ 60 Punkte)' : '⚠️ Noch nicht bestanden (< 60 Punkte — khassek 18/30 Messpunkte)') +
+                 '</div>';
+      } else {
+        var pct = Math.round((correctCount / totalCount) * 100);
+        epInfo = '<div class="score-banner ' + (pct >= 60 ? 'pass' : 'fail') + '">' +
+                 '🎯 Modelltest ' + mt + ' (' + M[md][0] + '): ' + correctCount + ' / ' + totalCount + ' S7a7 (' + pct + '%)' +
+                 '</div>';
+      }
+      html += epInfo;
+    } else {
+      html += '<h2>👁️ Offizielle Lösungen · Modelltest ' + mt + ' (' + M[md][0] + ')</h2>';
+    }
+
+    html += itemsHtml;
+    elOut.innerHTML = html;
+    elOc.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  document.getElementById('go').onclick = function(){ runEvaluation(false); };
+  document.getElementById('show-sol').onclick = function(){ runEvaluation(true); };
+  document.getElementById('clr-ans').onclick = function(){
+    var key = currentKey(), rng = getRange();
+    if(S.savedAns[key]){
+      for(var q = rng[0]; q <= rng[1]; q++) delete S.savedAns[key][q];
+      save();
+    }
+    elAn.value = '';
+    renderGrid();
+    elOc.classList.add('hide');
+  };
+
+
+  var RM_DATA = {
+    s1: `<h2>📝 Schreiben Teil 1 · Forumsbeitrag (≥150 Wörter · 60 Punkte)</h2>
+      <p class="mut">Struktur: Einleitung + 4 Leitpunkte (Meinung, Gründe, Alternativen/Möglichkeiten, Vor-/Nachteile) + Schluss.</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Redemittel (B2)</th><th>Beispiel</th></tr>
+        <tr>
+          <td><b>1. Einleitung (Thema einführen)</b></td>
+          <td>• In den letzten Jahren hat das Thema ... stark an Bedeutung gewonnen.<br>• Das Thema ... ist heutzutage ein viel diskutiertes Anliegen.<br>• Ich möchte heute etwas zum Thema ... schreiben.<br>• Das Thema ... ist deshalb so aktuell, weil ...<br>• In den Medien ist das Thema ... sehr präsent.<br>• Es ist auffällig, dass ...<br>• ... spielt in der heutigen Zeit eine wichtige Rolle.<br>• In der öffentlichen Diskussion wird häufig die Frage gestellt, ob ...<br>• ... ist zu einem festen Bestandteil unseres täglichen Lebens geworden.</td>
+          <td>• Das Thema Online-Unterricht ist heutzutage ein viel diskutiertes Anliegen.<br>• Ich möchte heute etwas zum Thema Fast Fashion schreiben.<br>• Das Thema Klimawandel ist deshalb so aktuell, weil immer mehr Naturkatastrophen auftreten.<br>• In den Medien ist das Thema künstliche Intelligenz sehr präsent.<br>• Es ist auffällig, dass immer mehr Menschen von zu Hause arbeiten.<br>• Das Internet spielt in der heutigen Zeit eine wichtige Rolle.<br>• In den letzten Jahren hat das Thema Nachhaltigkeit an Bedeutung gewonnen.<br>• In der öffentlichen Diskussion wird häufig die Frage gestellt, ob Social Media gefährlich ist.<br>• Online-Kommunikation ist zu einem festen Bestandteil unseres Lebens geworden.</td>
+        </tr>
+        <tr>
+          <td><b>2. Eigene Meinung äußern</b></td>
+          <td>• Meiner Meinung nach ...<br>• Meiner Ansicht nach ...<br>• Ich bin der Meinung, dass ...<br>• Ich denke, dass ...<br>• Ich vertrete die Meinung, dass ...<br>• Ich bin davon überzeugt, dass ...<br>• Aus meiner Sicht ...<br>• Ich vertrete die Auffassung, dass ...<br>• Ich bin der Überzeugung, dass ...<br>• Aus meiner Sicht ist kritisch zu hinterfragen, ob ...<br>• Ich stehe auf dem Standpunkt, dass ...<br>• Meines Erachtens lässt sich festhalten, dass ...<br>• Ich neige zu der Ansicht, dass ...</td>
+          <td>• Meiner Meinung nach sollten Jugendliche weniger Zeit am Handy verbringen.<br>• Meiner Ansicht nach ist Sport sehr wichtig für die Gesundheit.<br>• Ich bin der Meinung, dass Online-Lernen viele Vorteile hat.<br>• Ich denke, dass jeder Mensch Verantwortung für die Umwelt tragen sollte.<br>• Ich vertrete die Meinung, dass Bildung kostenlos sein sollte.<br>• Ich bin davon überzeugt, dass Technologie unser Leben verbessert.<br>• Aus meiner Sicht ist Teamarbeit sehr wichtig im Beruf.<br>• Ich vertrete die Auffassung, dass Digitalisierung große Chancen bietet.<br>• Ich bin der Überzeugung, dass lebenslanges Lernen notwendig ist.<br>• Aus meiner Sicht ist kritisch zu hinterfragen, ob Apps traditionellen Unterricht ersetzen können.<br>• Ich stehe auf dem Standpunkt, dass Struktur beim Schreiben entscheidend ist.<br>• Meines Erachtens lässt sich festhalten, dass Übung den Lernerfolg steigert.<br>• Ich neige zu der Ansicht, dass Online-Kurse sehr flexibel sind.</td>
+        </tr>
+        <tr>
+          <td><b>3. Gründe nennen</b></td>
+          <td>• Es gibt verschiedene Gründe dafür, dass ...<br>• Ein Grund dafür ist, dass ...<br>• Ein weiterer Grund ist, dass ...<br>• Hinzu kommt, dass ...<br>• Nicht zu unterschätzen ist, dass ...<br>• Darüber hinaus spricht vieles dafür, dass ...<br>• Ein weiterer Grund liegt in der Tatsache, dass ...<br>• Als Ursache kann man vermuten, dass ...<br>• Dafür lassen sich mehrere Argumente anführen.</td>
+          <td>• Es gibt verschiedene Gründe dafür, dass viele Menschen im Ausland arbeiten möchten.<br>• Ein Grund dafür ist, dass die Gehälter höher sind.<br>• Ein weiterer Grund ist, dass man neue Kulturen kennenlernen kann.<br>• Hinzu kommt, dass viele Firmen internationale Erfahrung verlangen.<br>• Nicht zu unterschätzen ist, dass gute Sprachkenntnisse wichtig sind.<br>• Darüber hinaus spricht vieles dafür, dass Digitalisierung Arbeitsprozesse erleichtert.<br>• Ein weiterer Grund liegt in der Tatsache, dass Technologien immer zugänglicher werden.<br>• Als Ursache kann man vermuten, dass Zeitmangel das Lernen erschwert.<br>• Dafür lassen sich mehrere Argumente anführen, etwa Flexibilität und Zeitersparnis.</td>
+        </tr>
+        <tr>
+          <td><b>4. Alternativen nennen</b></td>
+          <td>• Man könnte ...<br>• Sinnvoll wäre es, wenn ...<br>• Eine andere Möglichkeit wäre, ...<br>• Stattdessen könnte man ...<br>• Als Alternative schlage ich vor, dass ...<br>• Ein anderer Ansatz wäre, ...<br>• Denkbar wäre auch, ...<br>• Als ergänzende Maßnahme käme ... infrage.</td>
+          <td>• Man könnte mehr öffentliche Verkehrsmittel benutzen.<br>• Sinnvoll wäre es, wenn die Regierung mehr Fahrradwege baut.<br>• Eine andere Möglichkeit wäre, von zu Hause zu arbeiten.<br>• Stattdessen könnte man erneuerbare Energien nutzen.<br>• Als Alternative schlage ich vor, mehr Recyclingprogramme einzuführen.<br>• Ein anderer Ansatz wäre, mehr Umweltbildung in Schulen anzubieten.<br>• Denkbar wäre auch, internationale Kooperationen auszubauen.<br>• Als ergänzende Maßnahme käme ein Mentorenprogramm infrage.</td>
+        </tr>
+        <tr>
+          <td><b>5. Vorteile nennen</b></td>
+          <td>• Ein Vorteil ist, dass ...<br>• Der größte Vorteil ist, dass ...<br>• Ein weiterer Vorteil besteht darin, dass ...<br>• Positiv ist außerdem zu erwähnen, dass ...<br>• Besonders positiv hervorzuheben ist, dass ...<br>• Ein wesentlicher Vorteil liegt darin, dass ...<br>• Langfristig könnte sich dies als vorteilhaft erweisen, da ...<br>• Nicht zuletzt ist zu betonen, dass ...</td>
+          <td>• Ein Vorteil ist, dass Online-Kurse sehr flexibel sind.<br>• Der größte Vorteil ist, dass man Zeit spart.<br>• Ein weiterer Vorteil besteht darin, dass man von überall lernen kann.<br>• Positiv ist außerdem zu erwähnen, dass internationale Zusammenarbeit erleichtert wird.<br>• Besonders positiv hervorzuheben ist, dass Studierende selbstständig arbeiten können.<br>• Langfristig könnte sich dies als vorteilhaft erweisen, da Innovation gefördert wird.<br>• Nicht zuletzt ist zu betonen, dass kontinuierliches Lernen entscheidend ist.</td>
+        </tr>
+        <tr>
+          <td><b>6. Nachteile nennen</b></td>
+          <td>• Ein Nachteil ist, dass ...<br>• Allerdings müssen auch die möglichen Nachteile berücksichtigt werden.<br>• Problematisch erscheint insbesondere, dass ...<br>• Ein möglicher Nachteil besteht darin, dass ...<br>• Kritisch zu betrachten ist, dass ...<br>• Negativ ist sicherlich, dass ...<br>• Allerdings dürfen die Nachteile nicht vergessen werden.<br>• Dies könnte langfristig zu ... führen.<br>• Als Schwierigkeit könnte sich herausstellen, dass ...</td>
+          <td>• Ein Nachteil ist, dass der persönliche Kontakt fehlt.<br>• Problematisch erscheint insbesondere, dass Motivation nachlassen kann.<br>• Kritisch zu betrachten ist, dass soziale Medien süchtig machen können.<br>• Negativ ist sicherlich, dass technische Probleme auftreten können.<br>• Dies könnte langfristig zu gesundheitlichen Problemen führen.<br>• Als Schwierigkeit könnte sich herausstellen, dass Selbstdisziplin erforderlich ist.</td>
+        </tr>
+        <tr>
+          <td><b>7. Vorteile & Nachteile verbinden</b></td>
+          <td>• Einerseits ..., andererseits ...<br>• Auf der einen Seite ..., auf der anderen Seite ...<br>• Zwar ..., dennoch ...<br>• Es zeigt sich ein Spannungsfeld zwischen ... und ...<br>• Zwar spricht einiges für ..., dennoch darf nicht übersehen werden, dass ...</td>
+          <td>• Einerseits spart Online-Arbeit Zeit, andererseits fehlt der soziale Kontakt.<br>• Auf der einen Seite ist das Auto bequem, auf der anderen Seite belastet es die Umwelt.<br>• Zwar ist Technologie sehr hilfreich, dennoch kann sie auch Probleme verursachen.<br>• Es zeigt sich ein Spannungsfeld zwischen Komfort und Umweltschutz.<br>• Zwar spricht vieles für Online-Lernen, dennoch darf der persönliche Austausch nicht unterschätzt werden.</td>
+        </tr>
+        <tr>
+          <td><b>8. Dafür oder dagegen sein</b></td>
+          <td>• Ich spreche mich (eindeutig) für ... aus.<br>• Ich unterstütze die Ansicht, dass ...<br>• Ich befürworte diese Maßnahme ausdrücklich.<br>• Insgesamt überwiegen aus meiner Sicht die Vorteile.<br>• Ich bin (entschieden) dagegen, dass ...<br>• Ich stehe dieser Entwicklung kritisch gegenüber.<br>• Es gibt gewichtige Argumente gegen ...</td>
+          <td>• Ich spreche mich eindeutig für mehr digitale Bildung aus.<br>• Ich unterstütze die Ansicht, dass Bildung kostenlos sein sollte.<br>• Insgesamt überwiegen aus meiner Sicht die Vorteile dieser Lösung.<br>• Ich bin dagegen, dass Tiere in Zoos gehalten werden.<br>• Ich bin entschieden dagegen, dass Bildung nur digital stattfindet.<br>• Es gibt gewichtige Argumente gegen übermäßige Bildschirmzeit.</td>
+        </tr>
+        <tr>
+          <td><b>9. Schluss / Zusammenfassung</b></td>
+          <td>• Zusammenfassend lässt sich sagen / feststellen, dass ...<br>• Abschließend lässt sich festhalten, dass ...<br>• Insgesamt zeigt sich, dass ...<br>• Letztlich hängt alles davon ab, ...<br>• Es bleibt abzuwarten, wie sich ... entwickelt.</td>
+          <td>• Zusammenfassend lässt sich feststellen, dass Bildung entscheidend für die Zukunft ist.<br>• Abschließend lässt sich festhalten, dass Technologie viele Chancen bietet.<br>• Insgesamt zeigt sich, dass das Thema sehr komplex ist.<br>• Letztlich hängt alles davon ab, wie verantwortungsvoll wir handeln.<br>• Es bleibt abzuwarten, wie sich diese Technologie in Zukunft entwickelt.</td>
+        </tr>
+      </table>`,
+    s2: `<h2>✉️ Schreiben Teil 2 · Formeller Brief / E-Mail (≥100 Wörter · 40 Punkte)</h2>
+      <p class="mut">Struktur: Formelle Anrede + Grund des Schreibens + 4 Leitpunkte (Situation, Entschuldigung/Verständnis, Vorschlag/Bitte) + Schluss & Grußformel.</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Redemittel (B2)</th><th>Beispiel</th></tr>
+        <tr>
+          <td><b>1. Anfang & Anrede</b></td>
+          <td>• Sehr geehrte Frau ..., / Sehr geehrter Herr ...,<br>• Ich schreibe Ihnen, um ...<br>• Ich hoffe, diese Nachricht erreicht Sie in bester Verfassung.<br>• Mit dieser E-Mail möchte ich ...<br>• Da Sie telefonisch nicht erreichbar waren, wende ich mich per E-Mail an Sie.<br>• Mit dieser E-Mail wende ich mich an Sie, um ...<br>• Bezugnehmend auf unser letztes Gespräch möchte ich Ihnen mitteilen, dass ...</td>
+          <td>• Sehr geehrte Frau Müller, / Sehr geehrter Herr Schneider,<br>• Ich schreibe Ihnen, um ein Problem zu melden.<br>• Ich hoffe, diese Nachricht erreicht Sie in bester Verfassung.<br>• Mit dieser E-Mail möchte ich mich beschweren.<br>• Da Sie telefonisch nicht erreichbar waren, wende ich mich per E-Mail an Sie.<br>• Bezugnehmend auf unser letztes Gespräch möchte ich Ihnen mitteilen, dass ich teilnehmen werde.</td>
+        </tr>
+        <tr>
+          <td><b>2. Grund des Schreibens</b></td>
+          <td>• Der Grund meines Schreibens ist, dass ...<br>• Leider muss ich Ihnen mitteilen, dass ...<br>• Im Zusammenhang mit ...</td>
+          <td>• Der Grund meines Schreibens ist, dass mein Laptop defekt ist.<br>• Leider muss ich Ihnen mitteilen, dass ich den Termin nicht wahrnehmen kann.<br>• Im Zusammenhang mit meiner Bestellung ist ein Problem aufgetreten.</td>
+        </tr>
+        <tr>
+          <td><b>3. Entschuldigung & Verständnis</b></td>
+          <td>• Ich möchte mich für ... entschuldigen.<br>• Ich möchte mich aufrichtig bei Ihnen für ... entschuldigen.<br>• Es tut mir sehr leid, dass ...<br>• Bitte entschuldigen Sie die Umstände.<br>• Ich bitte Sie um Verständnis dafür, dass ...</td>
+          <td>• Ich möchte mich für die Verspätung entschuldigen.<br>• Ich möchte mich aufrichtig bei Ihnen für die Verspätung entschuldigen.<br>• Es tut mir sehr leid, dass ich nicht teilnehmen konnte.<br>• Bitte entschuldigen Sie die entstandenen Umstände.</td>
+        </tr>
+        <tr>
+          <td><b>4. Höfliche Bitte & Vorschlag</b></td>
+          <td>• Wäre es eventuell möglich, dass Sie ...?<br>• Ich würde Ihnen vorschlagen, dass wir ...<br>• Ich wäre Ihnen sehr dankbar, wenn Sie mir ... ermöglichen könnten.<br>• Könnten Sie mir bitte mitteilen, ob ...?</td>
+          <td>• Wäre es eventuell möglich, mir eine Fristverlängerung zu gewähren?<br>• Als Lösung schlage ich vor, einen neuen Termin zu vereinbaren.</td>
+        </tr>
+        <tr>
+          <td><b>5. Schluss & Grußformel</b></td>
+          <td>• Vielen Dank für Ihre Unterstützung.<br>• Vielen Dank im Voraus für Ihre Zeit und Ihr Verständnis.<br>• Ich freue mich auf Ihre Antwort.<br>• Mit freundlichen Grüßen<br>[Vorname Nachname]</td>
+          <td>• Vielen Dank für Ihre Unterstützung in dieser Angelegenheit.<br>• Vielen Dank im Voraus für Ihre Zeit und Ihr Verständnis.<br>• Ich freue mich auf Ihre Antwort.<br>• Mit freundlichen Grüßen<br>Bilal El Addouli</td>
+        </tr>
+      </table>`,
+    p1: `<h2>🎤 Sprechen Teil 1 · Präsentation / Vortrag (~3–4 Minuten · 32 + 12 Punkte)</h2>
+      <p class="mut">3 komplette Strukturen mit Redemitteln und Muster-Vorträgen:</p>
+
+      <h3>Struktur 1: Klassisch (Vorteile – Nachteile – Meinung)</h3>
+      <p class="mut">Thema: Sollte man Social Media einschränken?</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Einleitung</b></td><td>Thema vorstellen (Thema + Relevanz)</td><td>• Heute möchte ich über ... sprechen.<br>• Dieses Thema ist aktuell, weil ...</td><td>Heute spreche ich über das Thema Social Media, das immer wichtiger wird.</td></tr>
+        <tr><td><b>Überblick</b></td><td>Struktur ankündigen (Plan sagen)</td><td>• Zunächst ..., danach ..., schließlich ...</td><td>Zuerst nenne ich Vorteile, dann Nachteile und am Ende meine Meinung.</td></tr>
+        <tr><td><b>Vorteile</b></td><td>Pro (1–2 Vorteile)</td><td>• Ein großer Vorteil ist ...<br>• Darüber hinaus ...</td><td>Ein Vorteil ist die schnelle Kommunikation.</td></tr>
+        <tr><td><b>Nachteile</b></td><td>Contra (1–2 Nachteile)</td><td>• Ein Nachteil besteht darin, dass ...<br>• Nicht zu unterschätzen ist auch, dass ...</td><td>Ein Nachteil ist der hohe Zeitverbrauch.</td></tr>
+        <tr><td><b>Meinung</b></td><td>Position (Eigene Meinung)</td><td>• Ich bin der Ansicht, dass ...<br>• Meiner Meinung nach ...</td><td>Ich bin der Meinung, dass ...</td></tr>
+        <tr><td><b>Schluss</b></td><td>Fazit (Zusammenfassung)</td><td>• Abschließend lässt sich sagen ...<br>• Zusammenfassend ...</td><td>Zusammenfassend lässt sich sagen ...</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Vortrag (Struktur 1 – Social Media):</b>
+„Heute möchte ich über das Thema Social Media sprechen, das in unserer Gesellschaft eine immer größere Rolle spielt. Dieses Thema ist besonders aktuell, weil viele Menschen täglich mehrere Stunden online verbringen.
+Zunächst werde ich die Vorteile von Social Media darstellen, danach auf die Nachteile eingehen, und am Ende meine persönliche Meinung äußern.
+Ein großer Vorteil ist, dass soziale Medien die Kommunikation zwischen Menschen erleichtern. Man kann schnell Nachrichten austauschen und bleibt mit Freunden und Familie in Kontakt, auch wenn sie weit entfernt sind. Darüber hinaus ermöglichen Plattformen wie Instagram oder LinkedIn Networking und berufliche Kontakte.
+Ein Nachteil besteht jedoch darin, dass viele Nutzer zu viel Zeit online verbringen, was negative Auswirkungen auf die Konzentration und Produktivität haben kann. Nicht zu unterschätzen ist auch, dass Fake News und Cybermobbing auf sozialen Netzwerken verbreitet werden können.
+Meiner Meinung nach sollte die Nutzung von Social Media bewusst eingeschränkt werden, um sowohl die Produktivität als auch die psychische Gesundheit zu schützen.
+Zusammenfassend lässt sich sagen, dass Social Media sowohl Vorteile als auch Nachteile hat. Ich bin der Ansicht, dass eine bewusste Nutzung am sinnvollsten ist.“</div>
+
+      <h3>Struktur 2: Pro-Contra mit Bewertung</h3>
+      <p class="mut">Thema: Sollte Homeoffice Pflicht sein?</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Einleitung</b></td><td>Thema (Kontext + Frage)</td><td>• Es stellt sich die Frage, ob ...</td><td>Heute geht es um die Frage, ob Homeoffice Pflicht sein sollte.</td></tr>
+        <tr><td><b>Pro</b></td><td>Vorteile (Argumente FÜR)</td><td>• Für ... spricht, dass ...</td><td>Dafür spricht die Flexibilität.</td></tr>
+        <tr><td><b>Contra</b></td><td>Nachteile (Argumente GEGEN)</td><td>• Gegen ... spricht jedoch, dass ...</td><td>Dagegen spricht die Isolation.</td></tr>
+        <tr><td><b>Bewertung</b></td><td>Abwägung (vergleichen)</td><td>• Einerseits ..., andererseits ...</td><td>Beide Seiten haben Vor- und Nachteile.</td></tr>
+        <tr><td><b>Meinung</b></td><td>Entscheidung (klare Position)</td><td>• Nach Abwägung bin ich der Meinung, dass ...</td><td>Ich halte es für keine gute Idee.</td></tr>
+        <tr><td><b>Schluss</b></td><td>Fazit (Abschluss)</td><td>• Zusammenfassend / Abschließend ...</td><td>Abschließend lässt sich sagen ...</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Vortrag (Struktur 2 – Homeoffice):</b>
+„Heute geht es um die Frage, ob Homeoffice in Unternehmen Pflicht sein sollte. Dieses Thema gewinnt durch die Digitalisierung und die Corona-Pandemie zunehmend an Bedeutung.
+Zunächst möchte ich die Vorteile nennen. Für ein verpflichtendes Homeoffice spricht die Flexibilität für die Mitarbeiter. Sie sparen sich den Arbeitsweg, was Zeit und Geld spart. Außerdem kann Homeoffice die Vereinbarkeit von Beruf und Familie verbessern.
+Auf der anderen Seite spricht einiges gegen ein verpflichtendes Homeoffice. Ein entscheidender Nachteil ist, dass es zu sozialer Isolation führen kann. Außerdem fällt die direkte Kommunikation mit Kollegen weg, was die Zusammenarbeit erschwert.
+Nach Abwägung der Argumente bin ich der Meinung, dass ein vollständiges Homeoffice nicht verpflichtend sein sollte. Eine freiwillige Lösung wäre flexibler und berücksichtigt die individuellen Bedürfnisse der Mitarbeiter.
+Abschließend lässt sich sagen, dass Homeoffice viele Vorteile bietet, aber eine Pflicht zu einschränkenden Nachteilen führen kann. Daher sollte es eher eine Option als eine Verpflichtung bleiben.“</div>
+
+      <h3>Struktur 3: Problem – Ursache – Lösung</h3>
+      <p class="mut">Thema: Online-Lernen</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Einleitung</b></td><td>Thema (Kontext)</td><td>• Im Zuge der Digitalisierung ...</td><td>Online-Lernen wird immer wichtiger.</td></tr>
+        <tr><td><b>Problem</b></td><td>Was ist falsch?</td><td>• Ein zentrales Problem ist ...</td><td>Ein Problem ist die fehlende Motivation.</td></tr>
+        <tr><td><b>Ursache</b></td><td>Grund (Warum?)</td><td>• Die Ursache liegt in ...</td><td>Das liegt am fehlenden Kontakt.</td></tr>
+        <tr><td><b>Lösung</b></td><td>Vorschlag</td><td>• Eine mögliche Lösung wäre ...</td><td>Eine Lösung wäre Hybridunterricht.</td></tr>
+        <tr><td><b>Meinung</b></td><td>Bewertung (Eigene Sicht)</td><td>• Ich bin davon überzeugt, dass ...</td><td>Ich finde diese Lösung sinnvoll.</td></tr>
+        <tr><td><b>Schluss</b></td><td>Fazit (Abschluss)</td><td>• Abschließend lässt sich sagen ...</td><td>Zusammenfassend ...</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Vortrag (Struktur 3 – Online-Lernen):</b>
+„Im Zuge der Digitalisierung gewinnt Online-Lernen immer mehr an Bedeutung. Dennoch stellt sich die Frage, ob diese Lernform genauso effektiv ist wie der Präsenzunterricht.
+Ein zentrales Problem besteht darin, dass viele Lernende Schwierigkeiten haben, sich zu konzentrieren und motiviert zu bleiben. Besonders problematisch ist, dass der direkte Kontakt zu Lehrern und Mitschülern fehlt.
+Die Ursache dafür liegt hauptsächlich in der fehlenden Interaktion und der Ablenkung durch digitale Geräte. Viele Lernende verlieren den Fokus und die Kontrolle über ihr Lernpensum.
+Eine mögliche Lösung wäre die Einführung von Hybridmodellen, die Online-Lernen mit Präsenzunterricht kombinieren. So können die Vorteile digitaler Lernplattformen genutzt werden, während der persönliche Kontakt erhalten bleibt.
+Ich bin davon überzeugt, dass ein hybrides Modell am sinnvollsten ist, um die Effektivität des Lernens zu steigern.
+Abschließend lässt sich sagen, dass Online-Lernen Potenzial hat, aber gezielte Maßnahmen nötig sind, um die Qualität mit Präsenzunterricht vergleichbar zu machen.“</div>`,
+    p2: `<h2>💬 Sprechen Teil 2 · Diskussion / Dialog (~5 Minuten · 40 Punkte)</h2>
+      <p class="mut">3 komplette Dialog-Strukturen mit Redemitteln und Muster-Dialogen:</p>
+
+      <h3>Struktur 1: Klassische Planung</h3>
+      <p class="mut">Thema: Eine Party organisieren</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Einstieg</b></td><td>Start (Thema eröffnen)</td><td>• Wie wäre es, wenn ...?</td><td>Sollen wir zuerst den Ort besprechen?</td></tr>
+        <tr><td><b>Vorschlag</b></td><td>Idee</td><td>• Ich würde vorschlagen, dass ...</td><td>Ich schlage vor, wir machen die Party zu Hause.</td></tr>
+        <tr><td><b>Reaktion</b></td><td>Interaktion (zustimmen / ablehnen)</td><td>• Da stimme ich dir zu.<br>• Ich sehe das anders.</td><td>Das klingt gut, aber ...</td></tr>
+        <tr><td><b>Diskussion</b></td><td>Abwägen (vergleichen)</td><td>• Einerseits ..., andererseits ...</td><td>Zu Hause ist günstig, aber klein.</td></tr>
+        <tr><td><b>Entscheidung</b></td><td>Ergebnis (Zusammenfassung)</td><td>• Dann entscheiden wir uns für ...</td><td>Dann machen wir es zu Hause.</td></tr>
+        <tr><td><b>Abschluss</b></td><td>Ende (Einigung)</td><td>• Ich denke, wir sind uns einig.</td><td>Gut, dann haben wir alles geklärt.</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Dialog (Struktur 1 – Party organisieren):</b>
+Person A: „Sollen wir vielleicht zuerst den Ort der Party besprechen?“
+Person B: „Ja, das ist eine gute Idee. Ich würde vorschlagen, dass wir die Party bei mir zu Hause machen. Dort ist genug Platz für etwa 15 Personen.“
+Person A: „Das klingt gut, aber bei dir ist es vielleicht etwas klein, vor allem wenn noch Freunde spontan kommen.“
+Person B: „Stimmt, andererseits ist es sehr gemütlich und wir sparen uns die Kosten für einen Saal. Außerdem ist die Lage zentral, also leicht für alle zu erreichen.“
+Person A: „Das stimmt. Vielleicht könnten wir einige Bereiche draußen nutzen, falls das Wetter schön ist?“
+Person B: „Ja, der Garten wäre perfekt. Dann können wir drinnen und draußen verteilen und es bleibt trotzdem gemütlich.“
+Person A: „Super! Dann sollten wir über das Essen und die Getränke sprechen. Ich könnte die Getränke besorgen.“
+Person B: „Prima, dann übernehme ich das Essen. Vielleicht könnten wir auch ein kleines Buffet mit Snacks vorbereiten.“
+Person A: „Gute Idee! Sollen wir eine Playlist mit Musik machen, damit die Stimmung gut ist?“
+Person B: „Ja, das ist wichtig. Außerdem könnten wir ein paar Spiele planen, damit es lustig bleibt.“
+Person A: „Perfekt, dann haben wir alles organisiert.“</div>
+
+      <h3>Struktur 2: Problem lösen (kooperativ)</h3>
+      <p class="mut">Thema: Ein Projekt hat Probleme</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Problem</b></td><td>Einstieg (Problem nennen)</td><td>• Das Problem ist, dass ...</td><td>Wir haben ein Problem mit der Organisation.</td></tr>
+        <tr><td><b>Meinung</b></td><td>Eigene Sicht sagen</td><td>• Ich bin der Meinung, dass ...</td><td>Ich denke, wir sollten ...</td></tr>
+        <tr><td><b>Vorschläge</b></td><td>Lösungen (Ideen)</td><td>• Eine Möglichkeit wäre ...</td><td>Wir könnten die Aufgaben neu verteilen.</td></tr>
+        <tr><td><b>Reaktion</b></td><td>Austausch (reagieren)</td><td>• Das klingt sinnvoll.<br>• Allerdings ...</td><td>Das ist eine gute Idee, aber ...</td></tr>
+        <tr><td><b>Einigung</b></td><td>Entscheidung (Lösung wählen)</td><td>• Können wir uns darauf einigen, dass ...?</td><td>Dann machen wir das so.</td></tr>
+        <tr><td><b>Abschluss</b></td><td>Ende (bestätigen)</td><td>• Perfekt, dann haben wir eine Lösung.</td><td>Gut, dann ist das geklärt.</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Dialog (Struktur 2 – Projekt-Probleme):</b>
+Person A: „Wir haben ein Problem mit der Organisation unseres Projekts. Die Aufgaben sind nicht klar verteilt, und manche Teammitglieder wissen nicht, was sie tun sollen.“
+Person B: „Da stimme ich dir zu. Ich denke, wir sollten die Aufgaben neu verteilen, damit jeder genau weiß, was zu tun ist.“
+Person A: „Das ist eine gute Idee. Wir könnten ein gemeinsames Dokument erstellen, in dem jeder seine Aufgaben einträgt. So bleibt alles transparent.“
+Person B: „Perfekt, dann kann jeder seinen Fortschritt aktualisieren. Außerdem sollten wir wöchentliche Meetings einplanen, damit wir mögliche Probleme frühzeitig erkennen.“
+Person A: „Ja, das ist wichtig. Wir könnten die Meetings jeden Montagmorgen kurz halten, um alles zu besprechen.“
+Person B: „Außerdem könnte jeder vorab seine Fragen per E-Mail senden, damit das Meeting effizienter wird.“
+Person A: „Das klingt sehr praktisch. Dann haben wir sowohl Transparenz als auch regelmäßige Kontrolle.“
+Person B: „Abgemacht. Dann machen wir es so und informieren das Team über die Änderungen.“
+Person A: „Gut, dann ist alles geklärt.“</div>
+
+      <h3>Struktur 3: Entscheidungsdiskussion (Optionen vergleichen)</h3>
+      <p class="mut">Thema: Reise planen</p>
+      <table class="rm-table">
+        <tr><th>Abschnitt</th><th>Funktion / Struktur</th><th>Redemittel</th><th>Beispiel</th></tr>
+        <tr><td><b>Einstieg</b></td><td>Start (Optionen nennen)</td><td>• Wir haben mehrere Möglichkeiten ...</td><td>Wir müssen entscheiden, wohin wir reisen.</td></tr>
+        <tr><td><b>Option 1</b></td><td>Idee (erste Option)</td><td>• Eine Möglichkeit wäre ...</td><td>Wir könnten nach Spanien fahren.</td></tr>
+        <tr><td><b>Option 2</b></td><td>Alternative (zweite Option)</td><td>• Eine Alternative wäre ...</td><td>Oder wir bleiben im Inland.</td></tr>
+        <tr><td><b>Vergleich</b></td><td>Analyse (Pro/Contra)</td><td>• Im Vergleich dazu ...</td><td>Spanien ist interessant, aber teuer.</td></tr>
+        <tr><td><b>Meinung</b></td><td>Position sagen</td><td>• Ich tendiere eher zu ...</td><td>Ich bevorzuge Spanien.</td></tr>
+        <tr><td><b>Entscheidung</b></td><td>Ergebnis (Einigung)</td><td>• Dann entscheiden wir uns für ...</td><td>Dann fahren wir nach Spanien.</td></tr>
+      </table>
+      <div class="example-box"><b>Muster-Dialog (Struktur 3 – Reise planen):</b>
+Person A: „Wir müssen entscheiden, wohin wir im Sommer reisen. Wir haben mehrere Möglichkeiten.“
+Person B: „Ja, wir könnten nach Spanien fliegen oder im Inland bleiben, zum Beispiel in den Bergen.“
+Person A: „Spanien ist interessant, aber die Flüge sind ziemlich teuer. Im Inland wäre es günstiger und einfacher zu organisieren.“
+Person B: „Einerseits hast du recht, andererseits haben wir dort schon viele Orte besucht. Spanien wäre etwas Neues und Aufregendes.“
+Person A: „Das stimmt. Außerdem könnten wir dort das warme Wetter genießen und neue Kulturen kennenlernen.“
+Person B: „Ja, das ist ein großer Vorteil. Allerdings müssen wir auch die Unterkunftskosten berücksichtigen.“
+Person A: „Vielleicht könnten wir ein Ferienhaus teilen, dann wäre es günstiger für alle.“
+Person B: „Das klingt gut. Welche Reisezeit wäre am besten? Juli oder August?“
+Person A: „Ich denke, Ende Juli ist ideal, dann sind die Ferien schon im Gange, aber es ist noch nicht zu überfüllt.“
+Person B: „Dann sind wir uns einig, dass wir nach Spanien fahren und ein Ferienhaus buchen.“
+Person A: „Perfekt. Ich kümmere mich um die Buchung der Flüge, du um die Unterkunft?“
+Person B: „Ja, abgemacht!“</div>`
+  };
+
+  function renderRm(key){
+    var elRm = document.getElementById('rm-content');
+    if(elRm) elRm.innerHTML = RM_DATA[key] || RM_DATA.s1;
+  }
+  var rmTabsEl = document.getElementById('rm-tabs');
+  if(rmTabsEl){
+    rmTabsEl.onclick = function(e){
+      var b = e.target.closest('button');
+      if(!b || !b.dataset.rm) return;
+      rmTabsEl.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on', x === b); });
+      renderRm(b.dataset.rm);
+    };
+  }
+  renderRm('s1');
+
+  fillTl();
+  render();
+})();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+</body>
+</html>
